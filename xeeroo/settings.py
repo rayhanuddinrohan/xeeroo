@@ -19,6 +19,7 @@ ALLOWED_HOSTS = ['xeeroo.com']
 
 import dj_database_url
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -102,11 +103,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL:
     DATABASES = {
-        'default': dj_database_url.parse(
-            DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=env_bool("DATABASE_SSL_REQUIRE", True),
-        )
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
     }
 else:
     DATABASES = {
@@ -152,7 +149,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_DIR = BASE_DIR / 'static'

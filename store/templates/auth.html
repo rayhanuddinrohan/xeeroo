@@ -7,34 +7,34 @@
     <title>{% if auth_mode == 'register' %}Create Account{% else %}Sign In{% endif %} | Xeeroo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
+        * { box-sizing: border-box; }
         :root {
-            --bg: #fff7dc;
-            --card: #ffffff;
-            --text: #2f2417;
-            --muted: #7c6750;
-            --line: #ead8b3;
-            --accent: #f5b700;
-            --accent-dark: #dd9400;
-            --accent-soft: #fff1b8;
+            --bg-1: #f6f1e8;
+            --bg-2: #eadfcf;
+            --card: rgba(255, 255, 255, 0.92);
+            --text: #221a11;
+            --muted: #6f6253;
+            --line: #ddd1bf;
+            --accent: #171717;
+            --accent-soft: #f3ece2;
+            --button: #1f1a17;
+            --button-hover: #000000;
+            --gold: #c89a38;
         }
 
         body {
             margin: 0;
             min-height: 100vh;
-            font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+            font-family: "Manrope", sans-serif;
             color: var(--text);
             background:
-                radial-gradient(circle at top left, rgba(255, 229, 123, 0.45), transparent 32%),
-                radial-gradient(circle at bottom right, rgba(245, 183, 0, 0.18), transparent 26%),
-                linear-gradient(135deg, #fffaf0 0%, #fff4cf 48%, #ffe8a3 100%);
+                radial-gradient(circle at top left, rgba(255, 255, 255, 0.65), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(200, 154, 56, 0.12), transparent 26%),
+                linear-gradient(135deg, var(--bg-1) 0%, #efe6d8 40%, var(--bg-2) 100%);
             display: flex;
             flex-direction: column;
         }
@@ -44,22 +44,23 @@
             align-items: center;
             justify-content: space-between;
             gap: 16px;
-            padding: 18px 22px;
+            padding: 22px 24px 10px;
         }
 
         .brand {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             color: var(--text);
             text-decoration: none;
+            font-size: 1.05rem;
             font-weight: 800;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.01em;
         }
 
         .brand img {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             object-fit: contain;
         }
 
@@ -70,45 +71,38 @@
             font-weight: 700;
         }
 
-        .home-link:hover {
-            color: var(--accent-dark);
-        }
+        .home-link:hover { color: var(--text); }
 
         .auth-shell {
-            width: min(1100px, calc(100% - 28px));
-            margin: 8px auto 34px;
+            width: min(1120px, calc(100% - 28px));
+            margin: 10px auto 36px;
             flex: 1;
             display: flex;
             align-items: center;
         }
 
         .container {
-            background-color: var(--card);
-            border: 1px solid rgba(227, 200, 136, 0.72);
-            border-radius: 32px;
-            box-shadow: 0 26px 70px rgba(115, 86, 20, 0.16);
             position: relative;
-            overflow: hidden;
             width: 100%;
             min-height: 720px;
+            overflow: hidden;
+            border: 1px solid rgba(196, 177, 148, 0.65);
+            border-radius: 34px;
+            background: var(--card);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 28px 90px rgba(62, 46, 24, 0.12);
         }
 
         .form-container {
             position: absolute;
             top: 0;
-            height: 100%;
-            transition: all 0.6s ease-in-out;
             width: 50%;
+            height: 100%;
+            transition: all 0.65s ease-in-out;
         }
 
-        .sign-in-container {
-            left: 0;
-            z-index: 2;
-        }
-
-        .container.right-panel-active .sign-in-container {
-            transform: translateX(100%);
-        }
+        .sign-in-container { left: 0; z-index: 2; }
+        .container.right-panel-active .sign-in-container { transform: translateX(100%); }
 
         .sign-up-container {
             left: 0;
@@ -120,19 +114,12 @@
             transform: translateX(100%);
             opacity: 1;
             z-index: 5;
-            animation: show 0.6s;
+            animation: show 0.65s;
         }
 
         @keyframes show {
-            0%, 49.99% {
-                opacity: 0;
-                z-index: 1;
-            }
-
-            50%, 100% {
-                opacity: 1;
-                z-index: 5;
-            }
+            0%, 49.99% { opacity: 0; z-index: 1; }
+            50%, 100% { opacity: 1; z-index: 5; }
         }
 
         .overlay-container {
@@ -142,121 +129,113 @@
             width: 50%;
             height: 100%;
             overflow: hidden;
-            transition: transform 0.6s ease-in-out;
+            transition: transform 0.65s ease-in-out;
             z-index: 100;
         }
 
-        .container.right-panel-active .overlay-container {
-            transform: translateX(-100%);
-        }
+        .container.right-panel-active .overlay-container { transform: translateX(-100%); }
 
         .overlay {
-            background:
-                radial-gradient(circle at top left, rgba(255, 255, 255, 0.24), transparent 28%),
-                linear-gradient(160deg, #ffd866 0%, #f5b700 42%, #c97f00 100%);
-            color: #fffdf7;
             position: relative;
             left: -100%;
-            height: 100%;
             width: 200%;
+            height: 100%;
+            color: #fff;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)),
+                linear-gradient(145deg, #28211c 0%, #191512 52%, #8a6421 100%);
             transform: translateX(0);
-            transition: transform 0.6s ease-in-out;
+            transition: transform 0.65s ease-in-out;
         }
 
-        .container.right-panel-active .overlay {
-            transform: translateX(50%);
-        }
+        .container.right-panel-active .overlay { transform: translateX(50%); }
 
         .overlay-panel {
             position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 52px;
-            text-align: center;
             top: 0;
-            height: 100%;
             width: 50%;
-            transition: transform 0.6s ease-in-out;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 58px;
+            text-align: left;
+            transition: transform 0.65s ease-in-out;
         }
 
-        .overlay-left {
-            transform: translateX(-20%);
-        }
+        .overlay-left { transform: translateX(-20%); }
+        .container.right-panel-active .overlay-left { transform: translateX(0); }
+        .overlay-right { right: 0; transform: translateX(0); }
+        .container.right-panel-active .overlay-right { transform: translateX(20%); }
 
-        .container.right-panel-active .overlay-left {
-            transform: translateX(0);
-        }
-
-        .overlay-right {
-            right: 0;
-            transform: translateX(0);
-        }
-
-        .container.right-panel-active .overlay-right {
-            transform: translateX(20%);
+        .overlay-kicker {
+            display: inline-flex;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
         }
 
         .overlay-panel h1 {
-            margin: 0 0 14px;
-            font-size: 44px;
-            line-height: 1.02;
-            letter-spacing: -0.03em;
+            margin: 20px 0 14px;
+            font-size: 48px;
+            line-height: 1;
+            letter-spacing: -0.04em;
         }
 
         .overlay-panel p {
-            margin: 0 0 24px;
-            max-width: 320px;
+            margin: 0 0 28px;
+            max-width: 340px;
+            color: rgba(255, 255, 255, 0.82);
             font-size: 15px;
-            line-height: 1.7;
+            line-height: 1.8;
         }
 
         form {
-            background-color: var(--card);
             display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 56px 56px;
             height: 100%;
-            text-align: center;
+            flex-direction: column;
+            justify-content: center;
+            padding: 58px 56px;
+            background: rgba(255, 255, 255, 0.98);
+            text-align: left;
         }
 
-        .form-header {
-            width: 100%;
-            margin-bottom: 10px;
-        }
+        .form-header { width: 100%; margin-bottom: 12px; text-align: left; }
 
         .eyebrow {
-            display: inline-block;
-            padding: 7px 14px;
+            display: inline-flex;
+            padding: 8px 14px;
             border-radius: 999px;
             background: var(--accent-soft);
-            color: #8a5900;
+            color: #86622c;
             font-size: 10px;
             font-weight: 800;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
         }
 
         h1 {
-            margin: 14px 0 8px;
-            font-size: 36px;
+            margin: 16px 0 10px;
+            font-size: 38px;
             line-height: 1.02;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.04em;
         }
 
         .helper {
+            margin-bottom: 24px;
             color: var(--muted);
             font-size: 14px;
-            line-height: 1.7;
-            margin-bottom: 24px;
+            line-height: 1.75;
+            max-width: 460px;
         }
 
-        .social-container {
-            margin: 0 0 22px;
-        }
+        .social-container { margin: 0 0 22px; }
 
         .google-button {
             display: inline-flex;
@@ -264,208 +243,242 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            border-radius: 18px;
+            padding: 15px 18px;
             border: 1px solid var(--line);
-            background: #fffdf7;
-            padding: 14px 16px;
-            color: #6e542e;
+            border-radius: 18px;
+            background: #fff;
+            color: #413326;
             font-size: 14px;
             font-weight: 700;
             text-decoration: none;
             pointer-events: none;
+            box-shadow: 0 10px 24px rgba(34, 26, 17, 0.04);
         }
 
-        .google-button i {
-            font-size: 18px;
-            color: #ea4335;
-        }
+        .google-button i { color: #db4437; font-size: 18px; }
 
         .field {
             width: 100%;
-            text-align: left;
             margin-bottom: 16px;
+            text-align: left;
         }
 
         .field label {
             display: block;
+            margin-bottom: 8px;
+            color: #554737;
             font-size: 12px;
             font-weight: 700;
-            color: #5c4630;
-            margin-bottom: 8px;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.03em;
         }
 
         input {
             width: 100%;
-            border: 1px solid transparent;
+            padding: 15px 17px;
+            border: 1px solid #e5d8c7;
             border-radius: 18px;
-            padding: 15px 18px;
-            font-size: 14px;
-            background: #fff9eb;
+            background: rgba(255, 255, 255, 0.96);
             color: var(--text);
-            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            font-size: 14px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
         }
 
         input:focus {
             outline: none;
-            border-color: rgba(245, 183, 0, 0.65);
-            box-shadow: 0 0 0 4px rgba(245, 183, 0, 0.15);
-            background: #ffffff;
+            border-color: rgba(200, 154, 56, 0.7);
+            box-shadow: 0 0 0 4px rgba(200, 154, 56, 0.12);
+            transform: translateY(-1px);
         }
 
         button {
+            border: none;
             border-radius: 999px;
-            border: 1px solid var(--accent);
-            background: linear-gradient(135deg, #f6bc18 0%, #eaa100 100%);
-            color: #fffdf7;
+            padding: 16px 44px;
+            background: linear-gradient(135deg, #201914 0%, #090909 100%);
+            color: #fff;
             font-size: 13px;
             font-weight: 800;
-            letter-spacing: 0.08em;
-            padding: 15px 44px;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            transition: transform 80ms ease-in, box-shadow 0.2s ease, filter 0.2s ease;
-            box-shadow: 0 12px 24px rgba(245, 183, 0, 0.22);
             cursor: pointer;
+            box-shadow: 0 18px 34px rgba(15, 13, 11, 0.18);
+            transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+            align-self: flex-start;
         }
 
         button:hover {
-            filter: brightness(1.02);
+            background: linear-gradient(135deg, #3a2d22 0%, #141414 100%);
+            box-shadow: 0 20px 36px rgba(15, 13, 11, 0.22);
+            transform: translateY(-1px);
         }
 
-        button:active {
-            transform: scale(0.96);
-        }
-
-        button:focus {
-            outline: none;
-        }
+        button:active { transform: scale(0.98); }
+        button:focus { outline: none; }
 
         button.ghost {
-            background: transparent;
-            border-color: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.16);
             box-shadow: none;
         }
+
+        button.ghost:hover { background: rgba(255, 255, 255, 0.14); }
 
         .auth-meta {
             width: 100%;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             gap: 12px;
-            margin-top: 10px;
+            margin-top: 12px;
             font-size: 13px;
         }
 
         .auth-meta a,
         .switch-link {
-            color: #9a6400;
+            color: #7f5a22;
             font-weight: 700;
             text-decoration: none;
         }
 
         .auth-meta a:hover,
-        .switch-link:hover {
-            color: #6e4700;
-        }
+        .switch-link:hover { color: #3a2a12; }
 
         .message-stack {
-            width: 100%;
-            margin-bottom: 18px;
             display: flex;
+            width: 100%;
             flex-direction: column;
             gap: 10px;
+            margin-bottom: 18px;
         }
 
         .message {
-            border-radius: 16px;
             padding: 13px 15px;
+            border-radius: 16px;
             font-size: 13px;
+            line-height: 1.55;
             text-align: left;
-            line-height: 1.5;
         }
 
         .message.error,
         .message.warning {
-            background: #fff1f0;
-            color: #a13c34;
-            border: 1px solid #f0c2bc;
+            background: #fff2f1;
+            color: #a03f35;
+            border: 1px solid #f0c7c2;
         }
 
         .message.success {
-            background: #eefaf0;
-            color: #1f6d34;
-            border: 1px solid #bde1c4;
+            background: #eff9f2;
+            color: #22683b;
+            border: 1px solid #c9e7d2;
         }
 
         .mobile-switch {
             display: none;
             margin-top: 18px;
-            font-size: 13px;
             color: var(--muted);
+            font-size: 13px;
+            text-align: left;
         }
 
         @media (max-width: 920px) {
-            .auth-shell {
-                width: min(720px, calc(100% - 22px));
-                margin-top: 0;
-            }
-
-            .container {
-                min-height: 760px;
-            }
-
-            .overlay-panel {
-                padding: 34px;
-            }
+            .auth-shell { width: min(760px, calc(100% - 22px)); }
+            .container { min-height: 780px; }
+            .overlay-panel { padding: 40px; }
+            form { padding: 46px 36px; }
         }
 
         @media (max-width: 768px) {
-            .site-bar {
-                padding: 16px;
-            }
-
-            .auth-shell {
-                align-items: stretch;
-                margin-bottom: 24px;
-            }
-
+            .site-bar { padding: 18px 16px 8px; }
+            .auth-shell { margin-bottom: 24px; align-items: stretch; }
             .container {
                 min-height: auto;
+                border-radius: 28px;
             }
-
             .form-container,
             .sign-in-container,
             .sign-up-container,
             .overlay-container {
                 position: relative;
-                width: 100%;
                 left: 0;
+                width: 100%;
                 transform: none !important;
             }
-
             .sign-in-container,
             .sign-up-container {
                 display: none;
                 opacity: 1;
                 z-index: auto;
             }
-
             .container.mobile-sign-in .sign-in-container,
-            .container.mobile-sign-up .sign-up-container {
-                display: block;
-            }
-
-            .overlay-container {
-                display: none;
-            }
-
+            .container.mobile-sign-up .sign-up-container { display: block; }
+            .overlay-container { display: none; }
             form {
-                padding: 38px 22px;
+                padding: 30px 20px;
             }
+            h1 {
+                font-size: 30px;
+            }
+            .helper {
+                font-size: 13px;
+                line-height: 1.7;
+                margin-bottom: 20px;
+            }
+            .field {
+                margin-bottom: 14px;
+            }
+            input {
+                padding: 14px 15px;
+                border-radius: 16px;
+            }
+            button {
+                width: 100%;
+                justify-content: center;
+                align-self: stretch;
+                padding: 15px 24px;
+            }
+            .auth-meta {
+                margin-top: 14px;
+            }
+            .mobile-switch { display: block; }
+        }
 
-            .mobile-switch {
-                display: block;
+        @media (max-width: 480px) {
+            .site-bar {
+                padding: 14px 14px 6px;
             }
+            .brand span {
+                font-size: 16px;
+            }
+            .brand img {
+                width: 40px;
+                height: 40px;
+            }
+            .home-link {
+                font-size: 13px;
+            }
+            .auth-shell {
+                width: calc(100% - 16px);
+                margin: 8px auto 18px;
+            }
+            form {
+                padding: 26px 16px;
+            }
+            .eyebrow {
+                font-size: 9px;
+                padding: 7px 12px;
+            }
+            h1 {
+                margin: 14px 0 8px;
+                font-size: 28px;
+            }
+            .google-button {
+                padding: 13px 14px;
+                font-size: 13px;
+            }
+            .auth-meta {
+                font-size: 12px;
+            }
+            .mobile-switch { display: block; }
         }
     </style>
 </head>
@@ -483,10 +496,11 @@
             <div class="form-container sign-up-container">
                 <form method="POST" action="{% url 'register' %}">
                     {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ next_url|default:'' }}">
                     <div class="form-header">
-                        <span class="eyebrow">New to Xeeroo</span>
+                        <span class="eyebrow">Join Xeeroo</span>
                         <h1>Create account</h1>
-                        <div class="helper">Use your email to create a shopping account.</div>
+                        <div class="helper">Create your account to save delivery details, track orders, and shop faster.</div>
                     </div>
 
                     {% if messages and auth_mode == 'register' %}
@@ -524,7 +538,7 @@
                     <button type="submit">Sign Up</button>
                     <div class="mobile-switch">
                         Already have an account?
-                        <a href="{% url 'login' %}" class="switch-link">Sign in</a>
+                        <a href="{% url 'login' %}{% if next_url %}?next={{ next_url|urlencode }}{% endif %}" class="switch-link">Sign in</a>
                     </div>
                 </form>
             </div>
@@ -532,10 +546,11 @@
             <div class="form-container sign-in-container">
                 <form method="POST" action="{% url 'login' %}">
                     {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ next_url|default:'' }}">
                     <div class="form-header">
                         <span class="eyebrow">Welcome back</span>
                         <h1>Sign in</h1>
-                        <div class="helper">Use your email or username to access your account.</div>
+                        <div class="helper">Use your email or username to access your account and continue shopping.</div>
                     </div>
 
                     {% if messages and auth_mode == 'login' %}
@@ -564,12 +579,11 @@
 
                     <div class="auth-meta">
                         <a href="{% url 'password_reset' %}">Forgot your password?</a>
-                        <a href="{% url 'register' %}">Create account</a>
                     </div>
 
                     <div class="mobile-switch">
                         New here?
-                        <a href="{% url 'register' %}" class="switch-link">Create account</a>
+                        <a href="{% url 'register' %}{% if next_url %}?next={{ next_url|urlencode }}{% endif %}" class="switch-link">Create account</a>
                     </div>
                 </form>
             </div>
@@ -577,14 +591,16 @@
             <div class="overlay-container">
                 <div class="overlay">
                     <div class="overlay-panel overlay-left">
-                        <h1>Welcome back!</h1>
-                        <p>Sign in with your existing details to manage orders, track delivery, and continue shopping.</p>
+                        <span class="overlay-kicker">Already registered</span>
+                        <h1>Welcome back</h1>
+                        <p>Sign in to view your orders, manage account details, and continue from where you stopped.</p>
                         <button class="ghost" id="signIn" type="button">Sign In</button>
                     </div>
 
                     <div class="overlay-panel overlay-right">
-                        <h1>Hello there!</h1>
-                        <p>Create your account to save your profile, manage delivery details, and place orders faster.</p>
+                        <span class="overlay-kicker">New customer</span>
+                        <h1>Start with Xeeroo</h1>
+                        <p>Create your account to save your address, keep products in cart, and complete checkout more quickly.</p>
                         <button class="ghost" id="signUp" type="button">Sign Up</button>
                     </div>
                 </div>
@@ -599,17 +615,13 @@
         const signInButton = document.getElementById("signIn");
         const container = document.getElementById("container");
 
-        if (signUpButton) {
-            signUpButton.addEventListener("click", () => {
-                container.classList.add("right-panel-active");
-            });
-        }
+        signUpButton?.addEventListener("click", () => {
+            container.classList.add("right-panel-active");
+        });
 
-        if (signInButton) {
-            signInButton.addEventListener("click", () => {
-                container.classList.remove("right-panel-active");
-            });
-        }
+        signInButton?.addEventListener("click", () => {
+            container.classList.remove("right-panel-active");
+        });
     </script>
 </body>
 </html>

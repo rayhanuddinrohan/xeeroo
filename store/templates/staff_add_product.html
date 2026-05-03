@@ -46,21 +46,55 @@
             <div class="mb-8">
                 <p class="text-sm font-semibold uppercase tracking-[0.25em] text-amber-700">Staff Panel</p>
                 <h1 class="mt-3 text-3xl font-bold text-slate-900">Add Product</h1>
-                <p class="mt-2 text-sm text-slate-600">Create a product with one main image and optional multiple gallery images.</p>
+                <p class="mt-2 text-sm text-slate-600">Create one product manually or upload many products together using CSV or Excel.</p>
+            </div>
+
+            <div class="mb-6 rounded-3xl border border-amber-200 bg-amber-50 p-6 shadow-sm">
+                <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+                    <div>
+                        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-amber-700">Bulk Upload</p>
+                        <h2 class="mt-3 text-2xl font-bold text-slate-900">Add products from CSV or Excel</h2>
+                        <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-600">
+                            Supported files: <strong>.csv</strong> and <strong>.xlsx</strong>. Required columns:
+                            <code class="rounded bg-white px-2 py-1 text-xs">category</code>,
+                            <code class="rounded bg-white px-2 py-1 text-xs">name</code>,
+                            <code class="rounded bg-white px-2 py-1 text-xs">price</code>,
+                            <code class="rounded bg-white px-2 py-1 text-xs">image_url</code>.
+                            Optional columns:
+                            <code class="rounded bg-white px-2 py-1 text-xs">stock</code>,
+                            <code class="rounded bg-white px-2 py-1 text-xs">description</code>,
+                            <code class="rounded bg-white px-2 py-1 text-xs">gallery_image_urls</code>.
+                        </p>
+                    </div>
+                    <form method="POST" enctype="multipart/form-data" class="grid gap-3 rounded-3xl border border-white/70 bg-white p-4 shadow-sm lg:min-w-[360px]">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="bulk">
+                        <label class="block text-sm font-semibold text-slate-800">CSV / Excel File</label>
+                        <input type="file" name="bulk_file" accept=".csv,.xlsx" class="w-full rounded-2xl border border-slate-200 px-4 py-3">
+                        <button class="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white hover:bg-black">Upload Products</button>
+                    </form>
+                </div>
             </div>
 
             <div class="grid gap-6 xl:grid-cols-[1.25fr_0.75fr]">
                 <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
                     <form method="POST" enctype="multipart/form-data" class="grid gap-5 md:grid-cols-2">
                         {% csrf_token %}
+                        <input type="hidden" name="form_type" value="single">
                         <div>
-                            <label class="mb-2 block text-sm font-semibold text-slate-800">Category</label>
+                            <div class="mb-2 flex items-center justify-between gap-3">
+                                <label class="block text-sm font-semibold text-slate-800">Category</label>
+                                <a href="/admin/store/category/add/" target="_blank" class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-amber-100 text-lg font-bold text-amber-900 transition hover:bg-amber-200" title="Add new category">
+                                    +
+                                </a>
+                            </div>
                             <select name="category" class="w-full rounded-2xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
                                 <option value="">Select category</option>
                                 {% for category in categories %}
                                     <option value="{{ category.id }}">{{ category.name }}</option>
                                 {% endfor %}
                             </select>
+                            <p class="mt-2 text-xs text-slate-500">Need a new category? Use the plus button to add one, then come back and refresh this page.</p>
                         </div>
                         <div>
                             <label class="mb-2 block text-sm font-semibold text-slate-800">Product Name</label>
@@ -84,9 +118,19 @@
                             <p class="mt-2 text-xs text-slate-500">This image will be used as the default product cover.</p>
                         </div>
                         <div class="md:col-span-2">
+                            <label class="mb-2 block text-sm font-semibold text-slate-800">Main Product Image Link</label>
+                            <input id="mainImageUrlInput" type="url" name="image_url" placeholder="https://example.com/product-image.jpg" class="w-full rounded-2xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                            <p class="mt-2 text-xs text-slate-500">If you do not want to upload a file, paste a direct image link here.</p>
+                        </div>
+                        <div class="md:col-span-2">
                             <label class="mb-2 block text-sm font-semibold text-slate-800">Other Product Images</label>
                             <input id="galleryImagesInput" type="file" name="gallery_images" accept="image/*" multiple class="w-full rounded-2xl border border-slate-200 px-4 py-3">
                             <p class="mt-2 text-xs text-slate-500">You can select multiple gallery images at once.</p>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="mb-2 block text-sm font-semibold text-slate-800">Other Product Image Links</label>
+                            <textarea name="gallery_image_urls" rows="3" placeholder="https://example.com/image-1.jpg, https://example.com/image-2.jpg" class="w-full rounded-2xl border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400"></textarea>
+                            <p class="mt-2 text-xs text-slate-500">Separate multiple image links with commas or place each one on a new line.</p>
                         </div>
                         <div class="md:col-span-2">
                             <button class="w-full rounded-2xl bg-amber-500 px-5 py-3 font-semibold text-amber-950 hover:bg-amber-400">Save Product</button>
@@ -116,6 +160,7 @@
 
 <script>
     const mainImageInput = document.getElementById("mainImageInput");
+    const mainImageUrlInput = document.getElementById("mainImageUrlInput");
     const galleryImagesInput = document.getElementById("galleryImagesInput");
     const mainImagePreview = document.getElementById("mainImagePreview");
     const galleryPreview = document.getElementById("galleryPreview");
@@ -150,6 +195,26 @@
             mainImagePreview.appendChild(image);
         };
         reader.readAsDataURL(file);
+    });
+
+    mainImageUrlInput?.addEventListener("input", () => {
+        const url = mainImageUrlInput.value.trim();
+        if (!url) {
+            if (!mainImageInput.files?.length) {
+                mainImagePreview.innerHTML = "Select a main image to preview it here.";
+            }
+            return;
+        }
+
+        mainImagePreview.innerHTML = "";
+        const image = document.createElement("img");
+        image.src = url;
+        image.alt = "Main product link preview";
+        image.className = "h-full max-h-[320px] w-full object-cover";
+        image.onerror = () => {
+            mainImagePreview.innerHTML = '<div class="px-4 text-center text-sm text-red-500">The image preview could not be loaded from this link.</div>';
+        };
+        mainImagePreview.appendChild(image);
     });
 
     galleryImagesInput?.addEventListener("change", () => {

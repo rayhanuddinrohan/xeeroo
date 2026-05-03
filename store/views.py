@@ -1,11 +1,22 @@
+import csv
+import os
+import posixpath
+import zipfile
+from io import StringIO
+from urllib.parse import unquote, urlparse
+from urllib.request import urlopen
+from xml.etree import ElementTree as ET
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from django.core.files.base import ContentFile
 from django.db.models import Count, Q, Sum
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.utils.text import slugify
 from django.utils import timezone
 
 from .models import Banner, Category, CustomerProfile, Order, OrderItem, Product, ProductImage
@@ -23,6 +34,8 @@ STATUS_STEPS = {
     "cancelled": 0,
 }
 
+XLSX_NS = {"main": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
+
 
 def _auth_required_response(request, action_label="continue", ajax=False):
     target_url = f"{reverse('auth_required')}?next={request.get_full_path()}&action={action_label}"
@@ -37,6 +50,189 @@ def _auth_required_response(request, action_label="continue", ajax=False):
             status=401,
         )
     return redirect(target_url)
+
+
+def _download_image_from_url(image_url, fallback_name):
+    parsed = urlparse(image_url)
+    if parsed.scheme not in {"http", "https"}:
+        raise ValueError("Only http and https image links are supported.")
+
+    file_name = os.path.basename(unquote(parsed.path)) or f"{fallback_name}.jpg"
+    safe_name = slugify(os.path.splitext(file_name)[0]) or slugify(fallback_name) or "product-image"
+    extension = os.path.splitext(file_name)[1].lower() or ".jpg"
+    if len(extension) > 8:
+        extension = ".jpg"
+
+    with urlopen(image_url, timeout=15) as response:
+        content = response.read()
+
+    if not content:
+        raise ValueError("The image link did not return any file content.")
+
+    return ContentFile(content, name=f"{safe_name}{extension}")
+
+
+def _resolve_product_image(uploaded_file, image_url, fallback_name):
+    if uploaded_file:
+        return uploaded_file
+    if image_url:
+        return _download_image_from_url(image_url, fallback_name)
+    return None
+
+
+def _create_product_with_assets(
+    *,
+    category,
+    name,
+    price,
+    stock,
+    description,
+    main_image,
+    gallery_images=None,
+    gallery_urls=None,
+):
+    product = Product.objects.create(
+        category=category,
+        name=name,
+        price=price,
+        stock=stock,
+        description=description,
+        image=main_image,
+    )
+
+    for gallery_image in gallery_images or []:
+        ProductImage.objects.create(product=product, image=gallery_image)
+
+    for index, gallery_url in enumerate(gallery_urls or [], start=1):
+        cleaned_url = (gallery_url or "").strip()
+        if not cleaned_url:
+            continue
+        downloaded = _download_image_from_url(cleaned_url, f"{name}-gallery-{index}")
+        ProductImage.objects.create(product=product, image=downloaded)
+
+    return product
+
+
+def _normalize_header(value):
+    return str(value or "").strip().lower().replace(" ", "_")
+
+
+def _category_from_text(category_name):
+    cleaned = str(category_name or "").strip()
+    if not cleaned:
+        raise ValueError("Category is required.")
+    category = Category.objects.filter(name__iexact=cleaned).first()
+    if category:
+        return category
+    return Category.objects.create(name=cleaned)
+
+
+def _parse_gallery_url_text(raw_value):
+    cleaned = str(raw_value or "").replace("\n", ",").replace("|", ",")
+    return [item.strip() for item in cleaned.split(",") if item.strip()]
+
+
+def _iter_bulk_product_rows(uploaded_file):
+    extension = os.path.splitext(uploaded_file.name)[1].lower()
+    if extension == ".csv":
+        text = uploaded_file.read().decode("utf-8-sig")
+        reader = csv.DictReader(StringIO(text))
+        for row in reader:
+            yield {_normalize_header(key): value for key, value in row.items()}
+        return
+
+    if extension == ".xlsx":
+        yield from _iter_xlsx_rows(uploaded_file)
+        return
+
+    raise ValueError("Only CSV and XLSX files are supported for bulk upload.")
+
+
+def _iter_xlsx_rows(uploaded_file):
+    workbook = zipfile.ZipFile(uploaded_file)
+    shared_strings = []
+
+    if "xl/sharedStrings.xml" in workbook.namelist():
+        shared_root = ET.fromstring(workbook.read("xl/sharedStrings.xml"))
+        for item in shared_root.findall("main:si", XLSX_NS):
+            pieces = [node.text or "" for node in item.findall(".//main:t", XLSX_NS)]
+            shared_strings.append("".join(pieces))
+
+    sheet_path = "xl/worksheets/sheet1.xml"
+    if sheet_path not in workbook.namelist():
+        raise ValueError("The XLSX file does not contain a readable first sheet.")
+
+    sheet_root = ET.fromstring(workbook.read(sheet_path))
+    rows = []
+    for row in sheet_root.findall(".//main:sheetData/main:row", XLSX_NS):
+        row_data = {}
+        for cell in row.findall("main:c", XLSX_NS):
+            cell_ref = cell.attrib.get("r", "")
+            column_letters = "".join(ch for ch in cell_ref if ch.isalpha())
+            cell_type = cell.attrib.get("t")
+            value_node = cell.find("main:v", XLSX_NS)
+            if value_node is None:
+                value = ""
+            else:
+                raw_value = value_node.text or ""
+                if cell_type == "s":
+                    value = shared_strings[int(raw_value)] if raw_value.isdigit() and int(raw_value) < len(shared_strings) else ""
+                else:
+                    value = raw_value
+            row_data[column_letters] = value
+        rows.append(row_data)
+
+    if not rows:
+        return
+
+    headers = []
+    header_row = rows[0]
+    ordered_columns = sorted(header_row.keys(), key=lambda col: (len(col), col))
+    for column in ordered_columns:
+        headers.append(_normalize_header(header_row.get(column)))
+
+    for row in rows[1:]:
+        normalized = {}
+        for index, column in enumerate(ordered_columns):
+            if index >= len(headers) or not headers[index]:
+                continue
+            normalized[headers[index]] = row.get(column, "")
+        if any(str(value).strip() for value in normalized.values()):
+            yield normalized
+
+
+def _bulk_create_products(uploaded_file):
+    created_count = 0
+    errors = []
+
+    for row_index, row in enumerate(_iter_bulk_product_rows(uploaded_file), start=2):
+        try:
+            category = _category_from_text(row.get("category"))
+            name = str(row.get("name", "")).strip()
+            price = str(row.get("price", "")).strip()
+            stock = str(row.get("stock", "")).strip() or "0"
+            description = str(row.get("description", "")).strip()
+            image_url = str(row.get("image_url", "")).strip()
+            gallery_urls = _parse_gallery_url_text(row.get("gallery_image_urls", ""))
+
+            if not all([name, price, image_url]):
+                raise ValueError("Name, price, and image_url are required.")
+
+            main_image = _download_image_from_url(image_url, name)
+            _create_product_with_assets(
+                category=category,
+                name=name,
+                price=price,
+                stock=stock,
+                description=description,
+                main_image=main_image,
+                gallery_urls=gallery_urls,
+            )
+            created_count += 1
+        except Exception as exc:
+            errors.append(f"Row {row_index}: {exc}")
+
+    return created_count, errors
 
 
 def home(request):
@@ -772,30 +968,62 @@ def staff_add_product(request):
     categories = Category.objects.all().order_by("name")
 
     if request.method == "POST":
+        form_type = request.POST.get("form_type", "single").strip()
+
+        if form_type == "bulk":
+            bulk_file = request.FILES.get("bulk_file")
+            if not bulk_file:
+                messages.error(request, "Please choose a CSV or XLSX file for bulk upload.")
+            else:
+                try:
+                    created_count, errors = _bulk_create_products(bulk_file)
+                    if created_count:
+                        messages.success(request, f"{created_count} product(s) were added successfully.")
+                    if errors:
+                        for error in errors[:8]:
+                            messages.error(request, error)
+                        if len(errors) > 8:
+                            messages.error(request, f"{len(errors) - 8} more row error(s) were skipped.")
+                    if created_count and not errors:
+                        return redirect("staff_add_product")
+                except Exception as exc:
+                    messages.error(request, f"Bulk upload failed: {exc}")
+
+            return render(request, "staff_add_product.html", {"categories": categories})
+
         category_id = request.POST.get("category")
         name = request.POST.get("name", "").strip()
         price = request.POST.get("price", "").strip()
         stock = request.POST.get("stock", "").strip() or "0"
         description = request.POST.get("description", "").strip()
         image = request.FILES.get("image")
+        image_url = request.POST.get("image_url", "").strip()
         gallery_images = request.FILES.getlist("gallery_images")
+        gallery_urls = _parse_gallery_url_text(request.POST.get("gallery_image_urls", ""))
 
-        if not all([category_id, name, price, image]):
-            messages.error(request, "Category, product name, price, and image are required.")
+        if not all([category_id, name, price]):
+            messages.error(request, "Category, product name, and price are required.")
         else:
-            category = get_object_or_404(Category, id=category_id)
-            product = Product.objects.create(
-                category=category,
-                name=name,
-                price=price,
-                stock=stock,
-                description=description,
-                image=image,
-            )
-            for gallery_image in gallery_images:
-                ProductImage.objects.create(product=product, image=gallery_image)
-            messages.success(request, "Product added successfully.")
-            return redirect("staff_add_product")
+            try:
+                main_image = _resolve_product_image(image, image_url, name)
+                if not main_image:
+                    messages.error(request, "Please upload a main image or provide a valid image link.")
+                else:
+                    category = get_object_or_404(Category, id=category_id)
+                    _create_product_with_assets(
+                        category=category,
+                        name=name,
+                        price=price,
+                        stock=stock,
+                        description=description,
+                        main_image=main_image,
+                        gallery_images=gallery_images,
+                        gallery_urls=gallery_urls,
+                    )
+                    messages.success(request, "Product added successfully.")
+                    return redirect("staff_add_product")
+            except Exception as exc:
+                messages.error(request, f"Product could not be added: {exc}")
 
     return render(request, "staff_add_product.html", {"categories": categories})
 
