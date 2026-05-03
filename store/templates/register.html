@@ -1,0 +1,77 @@
+{% load static %}
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="bg-white shadow">
+    <div class="max-w-7xl mx-auto flex items-center justify-between p-4">
+
+        <!-- LOGO -->
+         <a href="{% url 'home' %}" class="flex items-center gap-2">
+            <img src="{% static 'images/ab-png.png' %}" width="40">
+            
+        </a>
+
+        <!-- HOME -->
+        <a href="{% url 'home' %}" class="text-gray-600 hover:text-green-600 font-medium">
+            Home
+        </a>
+
+    </div>
+</div>
+
+
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    
+    <form method="POST" class="bg-white p-8 rounded-xl shadow-lg w-96">
+        {% csrf_token %}
+
+        <h2 class="text-2xl font-bold mb-5 text-center text-green-600">
+            Create Account 🛍️
+        </h2>
+
+        <!-- Username -->
+        <input type="text" name="username" placeholder="Username"
+            class="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-green-400">
+
+        <!-- Email -->
+        <input type="email" name="email" placeholder="Email"
+            class="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-green-400">
+
+        <!-- Password -->
+        <input type="password" name="password" placeholder="Password"
+            class="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-green-400">
+
+        <!-- Confirm Password -->
+        <input type="password" name="confirm_password" placeholder="Confirm Password"
+            class="w-full mb-4 p-2 border rounded focus:ring-2 focus:ring-green-400">
+
+        <!-- Submit -->
+        <button class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+            Register
+        </button>
+
+        <!-- Login link -->
+        <p class="text-sm text-center mt-4">
+            Already have account?
+            <a href="{% url 'login' %}" class="text-green-600 font-semibold">
+                Login
+            </a>
+        </p>
+
+        <!-- Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <p class="text-red-500 text-sm mt-2 text-center">
+                    {{ message }}
+                </p>
+            {% endfor %}
+        {% endif %}
+
+    </form>
+
+</div>
+
+{% include 'includes/footer.html' %}

@@ -1,0 +1,362 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-amber-50 min-h-screen">
+
+<div class="flex min-h-screen">
+    <aside id="customerSidebar" class="fixed inset-y-0 left-0 z-40 w-72 -translate-x-full border-r border-amber-200 bg-white p-6 transition-transform duration-300 lg:translate-x-0">
+        <div class="flex items-center justify-between lg:block">
+            <a href="{% url 'home' %}" class="flex items-center gap-3">
+                <img src="{% static 'images/ab-png.png' %}" alt="Logo" class="w-10 h-10">
+                <div>
+                    <p class="font-bold text-amber-950">Xeeroo</p>
+                    <p class="text-sm text-amber-700">Customer dashboard</p>
+                </div>
+            </a>
+            <button id="closeCustomerSidebar" class="lg:hidden text-2xl text-amber-700">×</button>
+        </div>
+
+        <div class="mt-8 rounded-2xl bg-gradient-to-br from-amber-400 via-yellow-400 to-amber-500 p-5 text-amber-950 shadow-lg">
+            <div class="flex items-center gap-3">
+                {% if profile.profile_image %}
+                <img src="{{ profile.profile_image.url }}" alt="Profile" class="h-14 w-14 rounded-full object-cover border-2 border-white/30">
+                {% else %}
+                <span class="h-14 w-14 rounded-full flex items-center justify-center text-xl font-bold {% if profile.gender == 'female' %}bg-pink-500{% elif profile.gender == 'male' %}bg-sky-600{% else %}bg-violet-600{% endif %}">
+                    {% if profile.gender == 'female' %}F{% elif profile.gender == 'male' %}M{% else %}U{% endif %}
+                </span>
+                {% endif %}
+                <div>
+                    <p class="font-semibold">{{ request.user.username }}</p>
+                    <p class="text-sm text-amber-900">{{ request.user.email }}</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="mt-8 space-y-2 text-sm font-medium">
+            <a href="#account" data-section-link="account" class="section-link block rounded-xl px-4 py-3 text-amber-900 hover:bg-amber-100">Accounts</a>
+            <a href="#orders" data-section-link="orders" class="section-link block rounded-xl px-4 py-3 text-amber-900 hover:bg-amber-100">Orders</a>
+            <a href="{% url 'cart' %}" class="block rounded-xl px-4 py-3 text-amber-900 hover:bg-amber-100">Cart</a>
+            <a href="{% url 'home' %}" class="block rounded-xl px-4 py-3 text-amber-900 hover:bg-amber-100">Home</a>
+            <a href="{% url 'logout' %}" class="block rounded-xl px-4 py-3 text-red-500 hover:bg-red-50">Logout</a>
+        </nav>
+    </aside>
+
+    <div id="customerSidebarBackdrop" class="fixed inset-0 z-30 hidden bg-black/40 lg:hidden"></div>
+
+    <main class="flex-1 lg:ml-72">
+        <div class="border-b border-amber-200 bg-white/90 backdrop-blur">
+            <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
+                <div class="flex items-center gap-3">
+                    <button id="openCustomerSidebar" class="rounded-xl border border-amber-200 px-3 py-2 text-xl text-amber-900 lg:hidden">☰</button>
+                    <div>
+                        <h1 class="text-xl font-bold text-amber-950">Customer Dashboard</h1>
+                        <p class="text-sm text-amber-700">Manage your account and track your orders.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="{% url 'home' %}" class="text-sm text-amber-800 hover:text-amber-600">Home</a>
+                    <a href="{% url 'cart' %}" class="text-sm text-amber-800 hover:text-amber-600">Cart</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 py-10">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-amber-950">Welcome, {{ request.user.username }}</h1>
+            <p class="text-amber-700 mt-2">Use Accounts to manage your profile and Orders to track every purchase step by step.</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-4 rounded-xl bg-amber-100 text-amber-900 px-4 py-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="grid lg:grid-cols-[0.95fr_1.05fr] gap-8">
+            <section id="account" data-section-panel="account" class="space-y-6">
+                <div class="bg-white rounded-2xl shadow-sm ring-1 ring-amber-100 p-6">
+                    <div class="flex items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-amber-950">Accounts</h2>
+                            <p class="text-sm text-amber-700 mt-1">Only your personal account details are shown here.</p>
+                        </div>
+                        {% if request.GET.edit == '1' %}
+                        <a href="{% url 'customer_dashboard' %}#account" class="rounded-xl border border-amber-300 px-4 py-2 text-sm text-amber-900 hover:bg-amber-50">Cancel</a>
+                        {% else %}
+                        <a href="{% url 'customer_dashboard' %}?edit=1#account" class="rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-amber-950 hover:bg-amber-400">Edit Profile</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="mt-6 flex items-center gap-4">
+                        {% if profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" alt="Profile Preview" class="w-20 h-20 rounded-full object-cover border-4 border-amber-100">
+                        {% else %}
+                        <div class="w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl font-bold {% if profile.gender == 'female' %}bg-pink-500{% elif profile.gender == 'male' %}bg-sky-600{% else %}bg-violet-600{% endif %}">
+                            {% if profile.gender == 'female' %}F{% elif profile.gender == 'male' %}M{% else %}U{% endif %}
+                        </div>
+                        {% endif %}
+                        <div>
+                            <p class="font-semibold text-amber-950">{{ request.user.get_full_name|default:request.user.username }}</p>
+                            <p class="text-sm text-amber-700">{{ request.user.email }}</p>
+                            <p class="text-sm text-amber-700 mt-1">Phone: {{ profile.phone|default:"Not set" }}</p>
+                        </div>
+                    </div>
+
+                    {% if request.GET.edit == '1' %}
+                    <form method="POST" enctype="multipart/form-data" class="space-y-4 mt-6">
+                        {% csrf_token %}
+
+                        <div>
+                            <label class="block text-sm font-medium text-amber-900 mb-1">Profile picture</label>
+                            <input type="file" name="profile_image" accept="image/*" class="w-full rounded-xl border border-amber-200 px-4 py-3">
+                        </div>
+                        
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-amber-900 mb-1">First name</label>
+                                <input type="text" name="first_name" value="{{ request.user.first_name }}" class="w-full rounded-xl border border-amber-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-amber-900 mb-1">Last name</label>
+                                <input type="text" name="last_name" value="{{ request.user.last_name }}" class="w-full rounded-xl border border-amber-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-amber-900 mb-1">Username</label>
+                            <input type="text" name="username" value="{{ request.user.username }}" class="w-full rounded-xl border border-amber-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-amber-900 mb-1">Email</label>
+                            <input type="email" name="email" value="{{ request.user.email }}" class="w-full rounded-xl border border-amber-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-amber-900 mb-1">Phone</label>
+                            <input type="text" name="phone" value="{{ profile.phone }}" class="w-full rounded-xl border border-amber-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-amber-900 mb-1">Gender</label>
+                            <select name="gender" class="w-full rounded-xl border border-amber-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                                <option value="male" {% if profile.gender == 'male' %}selected{% endif %}>Male</option>
+                                <option value="female" {% if profile.gender == 'female' %}selected{% endif %}>Female</option>
+                                <option value="other" {% if profile.gender == 'other' %}selected{% endif %}>Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-amber-900 mb-1">Default address</label>
+                            <textarea name="address" rows="4" class="w-full rounded-xl border border-amber-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">{{ profile.address }}</textarea>
+                        </div>
+
+                        <button class="w-full rounded-xl bg-amber-500 text-amber-950 py-3 font-semibold hover:bg-amber-400">
+                            Save Changes
+                        </button>
+                    </form>
+                    {% else %}
+                    <div class="grid sm:grid-cols-2 gap-4 mt-6">
+                        <div class="rounded-2xl border border-amber-200 bg-amber-50/50 p-4">
+                            <p class="text-sm text-amber-700">Username</p>
+                            <p class="font-semibold text-amber-950 mt-1">{{ request.user.username }}</p>
+                        </div>
+                        <div class="rounded-2xl border border-amber-200 bg-amber-50/50 p-4">
+                            <p class="text-sm text-amber-700">Email</p>
+                            <p class="font-semibold text-amber-950 mt-1">{{ request.user.email }}</p>
+                        </div>
+                        <div class="rounded-2xl border border-amber-200 bg-amber-50/50 p-4">
+                            <p class="text-sm text-amber-700">Phone</p>
+                            <p class="font-semibold text-amber-950 mt-1">{{ profile.phone|default:"Not set" }}</p>
+                        </div>
+                        <div class="rounded-2xl border border-amber-200 bg-amber-50/50 p-4">
+                            <p class="text-sm text-amber-700">Gender</p>
+                            <p class="font-semibold text-amber-950 mt-1">{{ profile.get_gender_display }}</p>
+                        </div>
+                        <div class="rounded-2xl border border-amber-200 bg-amber-50/50 p-4 sm:col-span-2">
+                            <p class="text-sm text-amber-700">Default address</p>
+                            <p class="font-semibold text-amber-950 mt-1">{{ profile.address|default:"No address set" }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="bg-amber-950 text-amber-50 rounded-2xl shadow-sm p-6">
+                    <h2 class="text-xl font-bold mb-4">Account Notes</h2>
+                    <div class="space-y-3 text-sm text-amber-100">
+                        <p>Login Status: Active</p>
+                        <p>Keep your email and phone number updated for order confirmation and delivery.</p>
+                        <p>You can use the password reset flow if you want to change your password.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="orders" data-section-panel="orders" class="hidden space-y-6">
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-white rounded-2xl p-5 shadow-sm ring-1 ring-amber-100">
+                        <p class="text-sm text-amber-700">Total Orders</p>
+                        <h2 class="text-3xl font-bold text-amber-950 mt-2">{{ total_orders }}</h2>
+                    </div>
+                    <div class="bg-white rounded-2xl p-5 shadow-sm ring-1 ring-amber-100">
+                        <p class="text-sm text-amber-700">Total Spent</p>
+                        <h2 class="text-3xl font-bold text-amber-950 mt-2">{{ total_spent }} BDT</h2>
+                    </div>
+                    <div class="bg-white rounded-2xl p-5 shadow-sm ring-1 ring-amber-100">
+                        <p class="text-sm text-amber-700">Latest Order</p>
+                        <h2 class="text-xl font-bold text-amber-950 mt-2">
+                            {% if latest_order %}
+                                #{{ latest_order.id }}
+                            {% else %}
+                                No orders yet
+                            {% endif %}
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm ring-1 ring-amber-100 p-6">
+                <div class="flex items-center justify-between mb-5">
+                    <h2 class="text-xl font-bold text-amber-950">Order Summary</h2>
+                    <a href="{% url 'home' %}" class="text-sm text-amber-700 hover:underline">Continue Shopping</a>
+                </div>
+
+                <div class="space-y-4">
+                    {% for order in orders %}
+                        <div class="rounded-2xl border border-amber-200 p-5 bg-amber-50/40">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+                                <div>
+                                    <p class="font-bold text-amber-950">Order #{{ order.id }}</p>
+                                    <p class="text-sm text-amber-700">Ordered on {{ order.created_at|date:"F j, Y" }} at {{ order.created_at|date:"g:i A" }}</p>
+                                </div>
+                                <div class="inline-flex w-fit rounded-full bg-amber-100 text-amber-900 px-3 py-1 text-sm font-medium">
+                                    {{ order.get_status_display }}
+                                </div>
+                            </div>
+
+                            <div class="mb-5">
+                                <p class="text-sm font-semibold text-amber-900 mb-3">Order Progress</p>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                    {% for step in order.status_steps %}
+                                    <div class="rounded-xl border px-3 py-2 text-xs font-medium
+                                        {% if order.status == 'cancelled' %}
+                                            bg-red-50 border-red-200 text-red-600
+                                        {% elif step.active %}
+                                            bg-amber-200 border-amber-300 text-amber-950
+                                        {% elif step.done %}
+                                            bg-yellow-100 border-yellow-200 text-yellow-800
+                                        {% else %}
+                                            bg-white border-amber-100 text-amber-400
+                                        {% endif %}">
+                                        {{ step.label }}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="grid sm:grid-cols-2 gap-4 text-sm text-amber-800 mb-4">
+                                <div>
+                                    <p><span class="font-semibold text-amber-950">Name:</span> {{ order.customer_name }}</p>
+                                    <p><span class="font-semibold text-amber-950">Email:</span> {{ order.email }}</p>
+                                    <p><span class="font-semibold text-amber-950">Phone:</span> {{ order.phone }}</p>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-amber-950">Delivery Address</p>
+                                    <p>{{ order.address }}</p>
+                                </div>
+                            </div>
+
+                            <div class="border-t border-amber-200 pt-4 space-y-2">
+                                {% for item in order.items.all %}
+                                    <div class="flex items-center justify-between text-sm">
+                                        <p class="text-amber-900">{{ item.product_name }} x {{ item.quantity }}</p>
+                                        <p class="font-semibold text-amber-950">{{ item.price }} BDT</p>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="border-t border-amber-200 mt-4 pt-4 flex items-center justify-between">
+                                <p class="font-semibold text-amber-900">Total</p>
+                                <p class="text-lg font-bold text-amber-950">{{ order.total_price }} BDT</p>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="rounded-2xl border border-dashed border-amber-300 p-8 text-center">
+                            <p class="text-amber-700 mb-3">You have not placed any orders yet.</p>
+                            <a href="{% url 'home' %}" class="inline-block rounded-xl bg-amber-500 text-amber-950 px-5 py-2 font-semibold hover:bg-amber-400">
+                                Start Shopping
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+                </div>
+            </section>
+        </div>
+        </div>
+
+    </main>
+</div>
+
+{% include 'includes/footer.html' %}
+
+<script>
+    const customerSidebar = document.getElementById('customerSidebar');
+    const customerBackdrop = document.getElementById('customerSidebarBackdrop');
+    const openCustomerSidebar = document.getElementById('openCustomerSidebar');
+    const closeCustomerSidebar = document.getElementById('closeCustomerSidebar');
+    const sectionLinks = document.querySelectorAll('[data-section-link]');
+    const sectionPanels = document.querySelectorAll('[data-section-panel]');
+
+    function showCustomerSidebar() {
+        customerSidebar.classList.remove('-translate-x-full');
+        customerBackdrop.classList.remove('hidden');
+    }
+
+    function hideCustomerSidebar() {
+        customerSidebar.classList.add('-translate-x-full');
+        customerBackdrop.classList.add('hidden');
+    }
+
+    openCustomerSidebar?.addEventListener('click', showCustomerSidebar);
+    closeCustomerSidebar?.addEventListener('click', hideCustomerSidebar);
+    customerBackdrop?.addEventListener('click', hideCustomerSidebar);
+
+    function setActiveSection(sectionName) {
+        const activeSection = sectionName === 'orders' ? 'orders' : 'account';
+
+        sectionPanels.forEach((panel) => {
+            panel.classList.toggle('hidden', panel.dataset.sectionPanel !== activeSection);
+        });
+
+        sectionLinks.forEach((link) => {
+            const isActive = link.dataset.sectionLink === activeSection;
+            link.classList.toggle('bg-amber-200', isActive);
+            link.classList.toggle('text-amber-950', isActive);
+            link.classList.toggle('shadow-sm', isActive);
+        });
+    }
+
+    const initialSection = window.location.hash === '#orders' ? 'orders' : 'account';
+    setActiveSection(initialSection);
+
+    sectionLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+            setActiveSection(link.dataset.sectionLink);
+            hideCustomerSidebar();
+        });
+    });
+
+    window.addEventListener('hashchange', () => {
+        setActiveSection(window.location.hash.replace('#', ''));
+    });
+</script>
+
+</body>
+</html>

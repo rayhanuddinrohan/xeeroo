@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Orders</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-amber-50 min-h-screen">
+<div class="flex min-h-screen">
+    <aside class="group fixed inset-y-0 left-0 z-40 flex w-24 flex-col items-center border-r border-amber-200 bg-white py-6 shadow-sm transition-all duration-300 hover:w-72">
+        <a href="{% url 'home' %}" class="mb-8 flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100">
+            <img src="{% static 'images/ab-png.png' %}" alt="Logo" class="h-10 w-10">
+        </a>
+        <div class="mb-8 flex flex-col items-center px-3">
+            {% if profile.profile_image %}
+            <img src="{{ profile.profile_image.url }}" alt="Profile" class="h-12 w-12 rounded-full object-cover border-2 border-amber-300">
+            {% else %}
+            <span class="flex h-12 w-12 items-center justify-center rounded-full text-lg font-bold text-white {% if profile.gender == 'female' %}bg-pink-500{% elif profile.gender == 'male' %}bg-sky-600{% else %}bg-violet-600{% endif %}">
+                {% if profile.gender == 'female' %}F{% elif profile.gender == 'male' %}M{% else %}U{% endif %}
+            </span>
+            {% endif %}
+            <div class="mt-3 hidden text-center group-hover:block">
+                <p class="truncate font-semibold text-amber-950">{{ request.user.username }}</p>
+                <p class="truncate text-xs text-amber-700">{{ request.user.email }}</p>
+            </div>
+        </div>
+        <nav class="flex w-full flex-1 flex-col items-center gap-3 px-3">
+            <a href="{% url 'customer_account' %}" class="flex w-full items-center justify-center rounded-2xl px-4 py-3 text-amber-900 transition hover:bg-amber-100 group-hover:justify-start">
+                <span class="text-xl">👤</span>
+                <span class="ml-4 hidden whitespace-nowrap text-sm font-medium group-hover:block">Account</span>
+            </a>
+            <a href="{% url 'customer_dashboard' %}" class="flex w-full items-center justify-center rounded-2xl bg-amber-100 px-4 py-3 text-amber-950 transition group-hover:justify-start">
+                <span class="text-xl">📦</span>
+                <span class="ml-4 hidden whitespace-nowrap text-sm font-medium group-hover:block">Your Orders</span>
+            </a>
+            <a href="{% url 'customer_cart_panel' %}" class="flex w-full items-center justify-center rounded-2xl px-4 py-3 text-amber-900 transition hover:bg-amber-100 group-hover:justify-start">
+                <span class="text-xl">🛒</span>
+                <span class="ml-4 hidden whitespace-nowrap text-sm font-medium group-hover:block">Cart</span>
+            </a>
+            <a href="{% url 'home' %}" class="flex w-full items-center justify-center rounded-2xl px-4 py-3 text-amber-900 transition hover:bg-amber-100 group-hover:justify-start">
+                <span class="text-xl">⌂</span>
+                <span class="ml-4 hidden whitespace-nowrap text-sm font-medium group-hover:block">Home</span>
+            </a>
+        </nav>
+        <a href="{% url 'logout' %}" class="mt-8 flex w-full items-center justify-center rounded-2xl px-4 py-3 text-red-500 transition hover:bg-red-50 group-hover:justify-start">
+            <span class="text-xl">⎋</span>
+            <span class="ml-4 hidden whitespace-nowrap text-sm font-medium group-hover:block">Logout</span>
+        </a>
+    </aside>
+
+    <main class="flex-1 pl-24">
+        <div class="border-b border-amber-200 bg-white/90 backdrop-blur">
+            <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+                <div>
+                    <p class="text-sm font-medium text-amber-700">Xeeroo Customer Panel</p>
+                    <h1 class="text-3xl font-bold text-amber-950">Your Orders</h1>
+                </div>
+                <a href="{% url 'customer_account' %}" class="rounded-2xl border border-amber-300 px-5 py-3 text-sm font-semibold text-amber-900 hover:bg-amber-50">Open Account</a>
+            </div>
+        </div>
+
+        <div class="mx-auto max-w-7xl px-6 py-8">
+            <div class="mb-8 grid gap-4 md:grid-cols-3">
+                <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-amber-100">
+                    <p class="text-sm text-amber-700">Total Orders</p>
+                    <h2 class="mt-2 text-3xl font-bold text-amber-950">{{ total_orders }}</h2>
+                </div>
+                <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-amber-100">
+                    <p class="text-sm text-amber-700">Total Spent</p>
+                    <h2 class="mt-2 text-3xl font-bold text-amber-950">৳{{ total_spent }}</h2>
+                </div>
+                <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-amber-100">
+                    <p class="text-sm text-amber-700">Latest Order</p>
+                    <h2 class="mt-2 text-2xl font-bold text-amber-950">{% if latest_order %}#{{ latest_order.id }}{% else %}No orders yet{% endif %}</h2>
+                </div>
+            </div>
+
+            <div class="space-y-5">
+                {% for order in orders %}
+                <div class="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-amber-100">
+                    <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                        <div>
+                            <p class="text-lg font-bold text-amber-950">Order #{{ order.id }}</p>
+                            <p class="mt-1 text-sm text-amber-700">Ordered on {{ order.created_at|date:"F j, Y" }} at {{ order.created_at|date:"g:i A" }}</p>
+                        </div>
+                        <div class="inline-flex rounded-full bg-amber-100 px-4 py-2 text-sm font-semibold text-amber-900">{{ order.get_status_display }}</div>
+                    </div>
+
+                    <div class="mt-5 grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+                        {% for step in order.status_steps %}
+                        <div class="rounded-2xl border px-4 py-3 text-sm font-medium {% if order.status == 'cancelled' %}border-red-200 bg-red-50 text-red-600{% elif step.active %}border-amber-300 bg-amber-200 text-amber-950{% elif step.done %}border-yellow-200 bg-yellow-100 text-yellow-800{% else %}border-amber-100 bg-white text-amber-400{% endif %}">{{ step.label }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mt-6 grid gap-4 lg:grid-cols-2">
+                        <div class="rounded-2xl bg-amber-50 p-4">
+                            <p class="text-sm font-semibold text-amber-950">Delivery Details</p>
+                            <p class="mt-2 text-sm text-amber-900">Name: {{ order.customer_name }}</p>
+                            <p class="text-sm text-amber-900">Email: {{ order.email }}</p>
+                            <p class="text-sm text-amber-900">Phone: {{ order.phone }}</p>
+                            <p class="mt-2 text-sm text-amber-900">{{ order.address }}</p>
+                        </div>
+                        <div class="rounded-2xl bg-amber-50 p-4">
+                            <p class="text-sm font-semibold text-amber-950">Items</p>
+                            <div class="mt-2 space-y-2">
+                                {% for item in order.items.all %}
+                                <div class="flex items-center justify-between text-sm text-amber-900">
+                                    <span>{{ item.product_name }} x {{ item.quantity }}</span>
+                                    <span class="font-semibold">৳{{ item.price }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="mt-4 flex items-center justify-between border-t border-amber-200 pt-4">
+                                <span class="font-semibold text-amber-950">Total</span>
+                                <span class="text-lg font-bold text-amber-950">৳{{ order.total_price }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="rounded-3xl border border-dashed border-amber-300 bg-white p-12 text-center">
+                    <h2 class="text-2xl font-bold text-amber-950">No orders yet</h2>
+                    <p class="mt-2 text-amber-700">Once you place an order, it will appear here with live status updates.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+</div>
+{% include 'includes/footer.html' %}
+</body>
+</html>

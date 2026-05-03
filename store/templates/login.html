@@ -1,0 +1,63 @@
+{% load static %}
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="bg-white shadow">
+    <div class="max-w-7xl mx-auto flex items-center justify-between p-4">
+
+        <!-- LOGO -->
+        <a href="{% url 'home' %}" class="flex items-center gap-2">
+            <img src="{% static 'images/ab-png.png' %}" width="40">
+        </a>
+
+        <!-- HOME -->
+        <a href="{% url 'home' %}" class="text-gray-600 hover:text-green-600 font-medium">
+            Home
+        </a>
+
+    </div>
+</div>
+
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <form method="POST" class="bg-white p-6 rounded-lg shadow-lg w-80">
+        {% csrf_token %}
+
+        <h2 class="text-xl font-bold mb-4 text-center">Login</h2>
+
+        <input type="text" name="username" placeholder="Username"
+            class="w-full mb-3 p-2 border rounded">
+
+        <input type="password" name="password" placeholder="Password"
+            class="w-full mb-3 p-2 border rounded">
+
+        <button class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+            Login
+        </button>
+
+        <!-- Extra Options -->
+<div class="flex justify-between items-center mt-3 text-sm">
+
+    <!-- Register -->
+    <p>
+        New here?
+        <a href="{% url 'register' %}" class="text-green-600 font-semibold hover:underline">
+            Create account
+        </a>
+    </p>
+
+    <!-- Forgot Password -->
+    <a href="{% url 'password_reset' %}" 
+       class="text-red-500 hover:underline">
+        Forgot Password?
+    </a>
+
+    
+</div>
+
+    </form>
+</div>
+
+{% include 'includes/footer.html' %}

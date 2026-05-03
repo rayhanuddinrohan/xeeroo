@@ -1,0 +1,308 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff Dashboard</title>
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white min-h-screen">
+
+<div class="flex min-h-screen">
+    <aside id="staffSidebar" class="group fixed inset-y-0 left-0 z-40 flex w-24 flex-col items-center border-r border-amber-200 bg-white py-6 shadow-sm transition-all duration-300 hover:w-72">
+        <a href="{% url 'home' %}" class="mb-8 flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100">
+            <img src="{% static 'images/ab-png.png' %}" alt="Logo" class="h-10 w-10">
+        </a>
+
+        <div class="mb-8 flex flex-col items-center px-3">
+            {% if user_profile.profile_image %}
+            <img src="{{ user_profile.profile_image.url }}" alt="Profile" class="h-12 w-12 rounded-full object-cover ring-2 ring-amber-200">
+            {% else %}
+            <span class="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-yellow-400 text-lg font-bold text-amber-950">{{ request.user.username|slice:":1"|upper }}</span>
+            {% endif %}
+            <div class="mt-3 hidden text-center group-hover:block">
+                <p class="truncate font-semibold text-amber-950">{{ request.user.username }}</p>
+                <p class="truncate text-xs text-amber-700">{{ request.user.email }}</p>
+            </div>
+        </div>
+
+        <nav class="flex w-full flex-1 flex-col items-center gap-3 px-3 text-sm font-medium">
+            <a href="#orders" class="flex w-full items-center justify-center rounded-2xl bg-amber-100 px-4 py-3 text-amber-950 transition group-hover:justify-start">
+                <span class="text-xl">📦</span>
+                <span class="ml-4 hidden whitespace-nowrap group-hover:block">Orders</span>
+            </a>
+            <a href="{% url 'staff_add_product' %}" class="flex w-full items-center justify-center rounded-2xl px-4 py-3 text-amber-900 transition hover:bg-amber-100 group-hover:justify-start">
+                <span class="text-xl">＋</span>
+                <span class="ml-4 hidden whitespace-nowrap group-hover:block">Add Products</span>
+            </a>
+            <a href="/admin/store/banner/add/" class="flex w-full items-center justify-center rounded-2xl px-4 py-3 text-amber-900 transition hover:bg-amber-100 group-hover:justify-start">
+                <span class="text-xl">🖼</span>
+                <span class="ml-4 hidden whitespace-nowrap group-hover:block">Add Banners</span>
+            </a>
+            <a href="{% url 'staff_account' %}" class="flex w-full items-center justify-center rounded-2xl px-4 py-3 text-amber-900 transition hover:bg-amber-100 group-hover:justify-start">
+                <span class="text-xl">👤</span>
+                <span class="ml-4 hidden whitespace-nowrap group-hover:block">Accounts</span>
+            </a>
+            <a href="{% url 'admin:index' %}" class="flex w-full items-center justify-center rounded-2xl px-4 py-3 text-amber-900 transition hover:bg-amber-100 group-hover:justify-start">
+                <span class="text-xl">⚙</span>
+                <span class="ml-4 hidden whitespace-nowrap group-hover:block">Admin Panel</span>
+            </a>
+            <a href="{% url 'home' %}" class="flex w-full items-center justify-center rounded-2xl px-4 py-3 text-amber-900 transition hover:bg-amber-100 group-hover:justify-start">
+                <span class="text-xl">⌂</span>
+                <span class="ml-4 hidden whitespace-nowrap group-hover:block">Website</span>
+            </a>
+        </nav>
+
+        <a href="{% url 'logout' %}" class="mt-8 flex w-full items-center justify-center rounded-2xl px-4 py-3 text-red-500 transition hover:bg-red-50 group-hover:justify-start">
+            <span class="text-xl">⎋</span>
+            <span class="ml-4 hidden whitespace-nowrap group-hover:block">Logout</span>
+        </a>
+    </aside>
+
+    <div id="staffSidebarBackdrop" class="fixed inset-0 z-30 hidden bg-black/40 lg:hidden"></div>
+
+    <main class="flex-1 pl-24">
+    <div class="border-b border-amber-200 bg-white/90 backdrop-blur">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <button id="openStaffSidebar" class="rounded-xl border border-amber-200 px-3 py-2 text-xl text-amber-900 lg:hidden">☰</button>
+                <div>
+                    <h1 class="text-xl font-bold text-amber-950">Staff Dashboard</h1>
+                    <p class="text-sm text-amber-700">Review orders, update status, and manage operations.</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4 text-sm">
+                <a href="{% url 'admin:index' %}" class="text-amber-800 hover:text-amber-600">Admin</a>
+                <a href="{% url 'home' %}" class="text-amber-800 hover:text-amber-600">Website</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 py-10">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-amber-950">Staff / Operator Dashboard</h1>
+            <p class="text-amber-700 mt-2">Manage orders, add products, and handle account-level admin actions from one place.</p>
+        </div>
+
+        <div id="statusToast" class="hidden mb-4 rounded-xl px-4 py-3 text-sm"></div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-4 rounded-xl bg-amber-100 text-amber-900 px-4 py-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="mb-8 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-amber-100">
+            <div class="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-amber-950">Orders Filter</h2>
+                    <p class="text-sm text-amber-700">Use a specific day or a date range to inspect orders.</p>
+                </div>
+                <form method="GET" class="grid gap-3 md:grid-cols-4">
+                    <div>
+                        <label class="mb-2 block text-xs font-semibold uppercase tracking-wide text-amber-800">Today / Single Date</label>
+                        <input type="date" name="date" value="{{ selected_date }}" class="w-full rounded-2xl border border-amber-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                    </div>
+                    <div>
+                        <label class="mb-2 block text-xs font-semibold uppercase tracking-wide text-amber-800">Start Date</label>
+                        <input type="date" name="start_date" value="{{ start_date }}" class="w-full rounded-2xl border border-amber-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                    </div>
+                    <div>
+                        <label class="mb-2 block text-xs font-semibold uppercase tracking-wide text-amber-800">End Date</label>
+                        <input type="date" name="end_date" value="{{ end_date }}" class="w-full rounded-2xl border border-amber-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                    </div>
+                    <div class="flex items-end gap-2">
+                        <button class="w-full rounded-2xl bg-amber-500 px-4 py-3 font-semibold text-amber-950 hover:bg-amber-400">Apply</button>
+                        <a href="{% url 'staff_dashboard' %}" class="rounded-2xl border border-amber-300 px-4 py-3 text-sm font-semibold text-amber-900 hover:bg-amber-50">Reset</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 xl:grid-cols-5 gap-4 mb-8">
+            <div class="bg-white rounded-2xl shadow-sm ring-1 ring-amber-100 p-5">
+                <p class="text-sm text-amber-700">Today's Orders</p>
+                <h2 class="text-3xl font-bold text-amber-950 mt-2">{{ today_orders }}</h2>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm ring-1 ring-amber-100 p-5">
+                <p class="text-sm text-amber-700">Total Orders</p>
+                <h2 class="text-3xl font-bold text-amber-950 mt-2">{{ total_orders }}</h2>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm ring-1 ring-amber-100 p-5">
+                <p class="text-sm text-amber-700">Delivered Orders</p>
+                <h2 class="text-3xl font-bold text-amber-950 mt-2">{{ delivered_orders }}</h2>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm ring-1 ring-amber-100 p-5">
+                <p class="text-sm text-amber-700">Cancelled Orders</p>
+                <h2 class="text-3xl font-bold text-amber-950 mt-2">{{ cancelled_orders }}</h2>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm ring-1 ring-amber-100 p-5">
+                <p class="text-sm text-amber-700">Approved Orders</p>
+                <h2 class="text-3xl font-bold text-amber-950 mt-2">{{ confirmed_orders }}</h2>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm ring-1 ring-amber-100 p-5">
+                <p class="text-sm text-amber-700">Total Customers</p>
+                <h2 class="text-3xl font-bold text-amber-950 mt-2">{{ total_customers }}</h2>
+            </div>
+        </div>
+
+        <div class="mb-8 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-amber-100">
+            <p class="text-sm text-amber-700">Total Revenue</p>
+            <h2 class="mt-2 text-3xl font-bold text-amber-950">৳{{ total_revenue }}</h2>
+        </div>
+        <div>
+        <section id="orders" class="bg-white rounded-2xl shadow-sm ring-1 ring-amber-100 overflow-hidden">
+            <div class="px-6 py-5 border-b border-amber-200">
+                <h2 class="text-xl font-bold text-amber-950">Order List</h2>
+                <p class="text-sm text-amber-700 mt-1">Customer name, address, phone, email, product details, quantity, and total amount</p>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm">
+                    <thead class="bg-amber-500 text-amber-950">
+                        <tr>
+                            <th class="px-4 py-3 text-left">Order ID</th>
+                            <th class="px-4 py-3 text-left">Customer</th>
+                            <th class="px-4 py-3 text-left">Email</th>
+                            <th class="px-4 py-3 text-left">Phone</th>
+                            <th class="px-4 py-3 text-left">Address</th>
+                            <th class="px-4 py-3 text-left">Product Details</th>
+                            <th class="px-4 py-3 text-left">Quantity</th>
+                            <th class="px-4 py-3 text-left">Total</th>
+                            <th class="px-4 py-3 text-left">Status</th>
+                            <th class="px-4 py-3 text-left">Approve / Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr class="border-b border-amber-100 align-top hover:bg-amber-50">
+                                <td class="px-4 py-4 font-semibold text-amber-950">
+                                    #{{ order.id }}
+                                    <div class="text-xs text-amber-700 mt-1">{{ order.created_at }}</div>
+                                </td>
+                                <td class="px-4 py-4 text-amber-900">{{ order.customer_name }}</td>
+                                <td class="px-4 py-4 text-amber-900">{{ order.email }}</td>
+                                <td class="px-4 py-4 text-amber-900">{{ order.phone }}</td>
+                                <td class="px-4 py-4 text-amber-900 min-w-[220px]">{{ order.address }}</td>
+                                <td class="px-4 py-4 text-amber-900 min-w-[260px]">{{ order.product_details }}</td>
+                                <td class="px-4 py-4 text-amber-900">{{ order.quantity }}</td>
+                                <td class="px-4 py-4 font-semibold text-amber-950">{{ order.total_price }} BDT</td>
+                                <td class="px-4 py-4">
+                                    <span class="status-badge inline-flex rounded-full bg-amber-100 text-amber-900 px-3 py-1 text-xs font-semibold">
+                                        {{ order.status_label }}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-4 min-w-[220px]">
+                                    <form method="POST"
+                                          action="{% url 'update_order_status' order.id %}"
+                                          class="status-form flex flex-col gap-2"
+                                          data-order-id="{{ order.id }}">
+                                        {% csrf_token %}
+                                        <select name="status" class="status-select rounded-lg border border-amber-200 px-3 py-2 text-sm">
+                                            <option value="pending" {% if order.status == 'pending' %}selected{% endif %}>Pending</option>
+                                            <option value="approved" {% if order.status == 'approved' %}selected{% endif %}>Approved</option>
+                                            <option value="paid" {% if order.status == 'paid' %}selected{% endif %}>Paid</option>
+                                            <option value="processing" {% if order.status == 'processing' %}selected{% endif %}>Processing</option>
+                                            <option value="packed" {% if order.status == 'packed' %}selected{% endif %}>Packed</option>
+                                            <option value="shipped" {% if order.status == 'shipped' %}selected{% endif %}>Shipped</option>
+                                            <option value="out_for_delivery" {% if order.status == 'out_for_delivery' %}selected{% endif %}>Out for Delivery</option>
+                                            <option value="delivered" {% if order.status == 'delivered' %}selected{% endif %}>Delivered</option>
+                                            <option value="cancelled" {% if order.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                                        </select>
+                                        <button type="submit" class="save-status-btn rounded-lg bg-amber-500 text-amber-950 px-3 py-2 text-sm font-semibold hover:bg-amber-400">
+                                            Save Status
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="10" class="px-4 py-10 text-center text-amber-700">
+                                    No orders have been received yet.
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </main>
+</div>
+
+    {% include 'includes/footer.html' %}
+
+    <script>
+        const staffSidebar = document.getElementById('staffSidebar');
+        const staffBackdrop = document.getElementById('staffSidebarBackdrop');
+        const openStaffSidebar = document.getElementById('openStaffSidebar');
+        const closeStaffSidebar = document.getElementById('closeStaffSidebar');
+        const statusToast = document.getElementById('statusToast');
+
+        function showStaffSidebar() {
+            staffSidebar.classList.remove('-translate-x-full');
+            staffBackdrop.classList.remove('hidden');
+        }
+
+        function hideStaffSidebar() {
+            staffSidebar.classList.add('-translate-x-full');
+            staffBackdrop.classList.add('hidden');
+        }
+
+        function showStatusToast(message, ok = true) {
+            statusToast.textContent = message;
+            statusToast.classList.remove('hidden', 'bg-red-50', 'text-red-700', 'bg-green-50', 'text-green-700');
+            statusToast.classList.add(ok ? 'bg-green-50' : 'bg-red-50');
+            statusToast.classList.add(ok ? 'text-green-700' : 'text-red-700');
+        }
+
+        openStaffSidebar?.addEventListener('click', showStaffSidebar);
+        closeStaffSidebar?.addEventListener('click', hideStaffSidebar);
+        staffBackdrop?.addEventListener('click', hideStaffSidebar);
+
+        document.querySelectorAll('.status-form').forEach((form) => {
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const select = form.querySelector('.status-select');
+                const button = form.querySelector('.save-status-btn');
+                const badge = form.closest('tr').querySelector('.status-badge');
+                const formData = new FormData(form);
+
+                button.disabled = true;
+                button.textContent = 'Saving...';
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok || !data.ok) {
+                        showStatusToast(data.message || 'Status update failed.', false);
+                    } else {
+                        badge.textContent = data.status_label;
+                        showStatusToast(data.message, true);
+                    }
+                } catch (error) {
+                    showStatusToast('Live update failed. Please try again.', false);
+                } finally {
+                    button.disabled = false;
+                    button.textContent = 'Save Status';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
