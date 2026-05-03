@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
+DEBUG = False 
+
+ALLOWED_HOSTS = ['xeeroo.com']
+
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
