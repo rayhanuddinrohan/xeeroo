@@ -1,135 +1,47 @@
 const products = [
   {
-    id: "aurora-bag",
-    category: "Accessories",
-    price: "৳3,200",
-    emoji: "🎒",
-    coverImage: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=80",
+    id: "girls-gown",
+    category: "Fashion",
+    price: "৳5,500",
+    emoji: "👗",
+    coverImage: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=80",
     galleryImages: [
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1000&q=80"
+      "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1000&q=80"
     ],
-    title: { en: "Aurora Backpack", bn: "অরোরা ব্যাকপ্যাক" },
+    title: { en: "Girls Gown", bn: "গার্লস গাউন" },
     description: {
-      en: "A sporty and spacious companion for daily use.",
-      bn: "দৈনন্দিন ব্যবহারের জন্য আরামদায়ক, স্পোর্টি ও roomy ব্যাকপ্যাক।"
+      en: "Elegant and graceful for special occasions.",
+      bn: "বিশেষ অনুষ্ঠানের জন্য অনিন্দ্য ও মার্জিত।"
     },
     features: {
-      en: ["Water resistant", "Laptop sleeve", "Two color options"],
-      bn: ["ওয়াটার রেজিস্ট্যান্ট", "ল্যাপটপ স্লিভ", "দুইটি রঙের অপশন"]
-    },
-    tag: { en: "Best Seller", bn: "সেরা বিক্রয়" }
-  },
-  {
-    id: "luna-lamp",
-    category: "Home Decor",
-    price: "৳2,800",
-    emoji: "💡",
-    coverImage: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=1000&q=80",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=80"
-    ],
-    title: { en: "Luna Lamp", bn: "লুনা ল্যাম্প" },
-    description: {
-      en: "Soft lighting that makes your room feel calm and premium.",
-      bn: "নরম আলো আপনার ঘরকে শান্ত ও প্রিমিয়াম অনুভব করে।"
-    },
-    features: {
-      en: ["Warm light", "Minimal design", "USB powered"],
-      bn: ["ওয়ার্ম লাইট", "মিনিমাল ডিজাইন", "ইউএসবি পাওয়ার"]
+      en: ["Premium fabric", "Comfort fit", "Ready to wear"],
+      bn: ["প্রিমিয়াম কাপড়", "আরামদায়ক ফিট", "সাজে প্রস্তুত"]
     },
     tag: { en: "New", bn: "নতুন" }
   },
   {
-    id: "nova-jacket",
-    category: "Fashion",
-    price: "৳4,500",
-    emoji: "🧥",
-    coverImage: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1000&q=80",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1487412912498-0447578fcca8?auto=format&fit=crop&w=1000&q=80"
-    ],
-    title: { en: "Nova Jacket", bn: "নোভা জ্যাকেট" },
-    description: {
-      en: "A smart jacket for comfortable weather and polished style.",
-      bn: "আরামদায়ক আবহাওয়ার জন্য স্মার্ট ও স্টাইলিশ জ্যাকেট।"
-    },
-    features: {
-      en: ["Soft fabric", "Wind proof", "Unisex fit"],
-      bn: ["নরম কাপড়", "উইন্ড প্রুফ", "ইউনিসেক্স ফিট"]
-    },
-    tag: { en: "Hot", bn: "হট" }
-  },
-  {
-    id: "pulse-earbuds",
-    category: "Tech",
-    price: "৳5,200",
-    emoji: "🎧",
-    coverImage: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=80",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?auto=format&fit=crop&w=1000&q=80"
-    ],
-    title: { en: "Pulse Earbuds", bn: "পালস ইয়ারবাড" },
-    description: {
-      en: "Powerful sound and long battery life for everyday listening.",
-      bn: "দৈনন্দিন ব্যবহার উপযোগী শক্তিশালী সাউন্ড ও দীর্ঘ ব্যাটারি লাইফ।"
-    },
-    features: {
-      en: ["Noise control", "30h battery", "Fast charging"],
-      bn: ["নয়েজ কন্ট্রোল", "৩০ ঘন্টা ব্যাটারি", "ফাস্ট চার্জিং"]
-    },
-    tag: { en: "Popular", bn: "জনপ্রিয়" }
-  },
-  {
-    id: "velvet-blanket",
-    category: "Home Decor",
-    price: "৳2,100",
-    emoji: "🛋️",
-    coverImage: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=80",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1487015307662-6ce6210680f1?auto=format&fit=crop&w=1000&q=80"
-    ],
-    title: { en: "Velvet Blanket", bn: "ভেলভেট কম্বল" },
-    description: {
-      en: "A cozy and plush blanket for relaxing evenings.",
-      bn: "শান্তি আর আরামের জন্য নরম ও প্রফুল্ল ভেলভেট কম্বল।"
-    },
-    features: {
-      en: ["Soft texture", "Cozy feel", "Easy wash"],
-      bn: ["নরম টেক্সচার", "আরামদায়ক অনুভূতি", "সহজ ধোয়া"]
-    },
-    tag: { en: "Comfort", bn: "আরাম" }
-  },
-  {
-    id: "orbit-watch",
-    category: "Fashion",
-    price: "৳6,000",
+    id: "luxury-watch",
+    category: "Accessories",
+    price: "৳8,900",
     emoji: "⌚",
-    coverImage: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80",
+    coverImage: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=1000&q=80",
     galleryImages: [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=1000&q=80",
       "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1000&q=80"
     ],
-    title: { en: "Orbit Watch", bn: "অরবিট ওয়াচ" },
+    title: { en: "Luxury Watch", bn: "লাক্সারি ওয়াচ" },
     description: {
-      en: "A refined watch that complements your everyday style.",
-      bn: "আপনার দৈনন্দিন লুকে মানানসই একটি পরিশীলিত ওয়াচ।"
+      en: "A stylish statement piece for everyday elegance.",
+      bn: "দৈনন্দিন সাজে স্টাইলিশ একটি ঘোষণা।"
     },
     features: {
-      en: ["Smart display", "Water resistant", "Slim body"],
-      bn: ["স্মার্ট ডিসপ্লে", "ওয়াটার রেজিস্ট্যান্ট", "স্লিম বডি"]
+      en: ["Metal body", "Water resistant", "Elegant finish"],
+      bn: ["মেটাল বডি", "ওয়াটার রেজিস্ট্যান্ট", "শৈলীসম্পন্ন ফিনিশ"]
     },
-    tag: { en: "Limited", bn: "সীমিত" }
+    tag: { en: "Popular", bn: "জনপ্রিয়" }
   }
 ];
 
@@ -232,12 +144,14 @@ function getProductById(id) {
 }
 
 function getCategoryList() {
-  return ["All", ...new Set(products.map((product) => product.category))];
+  return ["All", ...new Set(products.map((product) => product.category).filter(Boolean))];
 }
 
 function getGalleryImages(product) {
   const images = Array.isArray(product.galleryImages) ? product.galleryImages : [];
-  return images.slice(0, 10);
+  const mainImage = product.coverImage || images[0] || "";
+  const rest = images.filter((image) => image && image !== mainImage);
+  return [mainImage, ...rest].filter(Boolean).slice(0, 10);
 }
 
 function getProductImage(product) {
@@ -250,6 +164,15 @@ function buildWhatsAppLink(product) {
     ? `হ্যালো! আমি ${title} অর্ডার করতে চাই। দাম: ${product.price}। অনুগ্রহ করে উপলব্ধতা নিশ্চিত করুন।`
     : `Hello! I want to order ${title}. Price: ${product.price}. Please confirm availability.`;
   return `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+function buildMessengerLink(product) {
+  const title = getLocalized(product, "title");
+  const productUrl = `${window.location.origin}${window.location.pathname}?product=${product.id}`;
+  const message = currentLanguage === "bn"
+    ? `হ্যালো! আমি ${title} দেখেছি। এই পণ্যের বিস্তারিত জানতে চাই। ${productUrl}`
+    : `Hello! I saw ${title}. I would like to know more about this product. ${productUrl}`;
+  return `https://m.me/XEEROO.0?text=${encodeURIComponent(message)}`;
 }
 
 function renderFeaturedProducts() {
@@ -272,6 +195,7 @@ function renderFeaturedProducts() {
         <div class="card-actions">
           <a class="button button-secondary" href="product-details.html?product=${product.id}" onclick="event.stopPropagation()">${translations[currentLanguage].cta.viewDetails}</a>
           <a class="button button-primary" href="${buildWhatsAppLink(product)}" target="_blank" onclick="event.stopPropagation()">${translations[currentLanguage].cta.buyNow}</a>
+          <a class="button button-secondary" href="${buildMessengerLink(product)}" target="_blank" onclick="event.stopPropagation()" aria-label="Message on Messenger">💬</a>
         </div>
       </article>
     `)
@@ -330,6 +254,7 @@ function renderProducts(activeCategory = "All") {
         <div class="card-actions">
           <a class="button button-secondary" href="product-details.html?product=${product.id}" onclick="event.stopPropagation()">${translations[currentLanguage].cta.viewDetails}</a>
           <a class="button button-primary" href="${buildWhatsAppLink(product)}" target="_blank" onclick="event.stopPropagation()">${translations[currentLanguage].cta.orderNow}</a>
+          <a class="button button-secondary" href="${buildMessengerLink(product)}" target="_blank" onclick="event.stopPropagation()" aria-label="Message on Messenger">💬</a>
         </div>
       </article>
     `)
@@ -376,6 +301,7 @@ function renderProductDetails() {
         </ul>
         <div class="card-actions">
           <a class="button button-primary" href="${buildWhatsAppLink(product)}" target="_blank">${translations[currentLanguage].cta.orderViaWhatsApp}</a>
+          <a class="button button-secondary" href="${buildMessengerLink(product)}" target="_blank">💬 Messenger</a>
           <a class="button button-secondary" href="products.html">${translations[currentLanguage].cta.backToProducts}</a>
         </div>
       </div>
