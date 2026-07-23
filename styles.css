@@ -78,9 +78,21 @@ body.theme-light .topbar {
 }
 
 .brand {
-  font-size: 1.35rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 1rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.brand-logo {
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.65rem;
+  object-fit: cover;
+  display: block;
 }
 
 .nav-links {
@@ -207,6 +219,19 @@ main {
   background: rgba(255, 255, 255, 0.08);
   color: var(--text);
   border: 1px solid var(--border);
+}
+
+.button-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.75rem 1rem;
+}
+
+.button-icon img {
+  width: 1.2rem;
+  height: 1.2rem;
+  display: block;
 }
 
 .hero-card,

@@ -45,9 +45,9 @@ const products = [
   }
 ];
 
-const PHONE_NUMBER = "8801712345678";
-let currentLanguage = localStorage.getItem("xeeroo-lang") || "en";
-let currentTheme = localStorage.getItem("xeeroo-theme") || "dark";
+const PHONE_NUMBER = "8801570203005";
+let currentLanguage = "en";
+let currentTheme = "light";
 
 const translations = {
   en: {
@@ -58,7 +58,7 @@ const translations = {
     hero: { eyebrow: "Smart · Fast · Elegant", title: "A polished storefront for your brand", text: "Launch a modern bilingual shopping experience with a professional layout, simple product browsing, and WhatsApp ordering built in.", badge1: "New Arrival", badge2: "Fast Order", cardTitle: "A premium online store for modern brands", point1: "Elegant landing experience", point2: "Category-based product browsing", point3: "WhatsApp order flow" },
     section: { categories: "Categories", chooseCategory: "Choose what fits your style", featured: "Featured products", featuredTitle: "Top picks for your customers", products: "Products", productsTitle: "Browse products by category", orderProcess: "Order process", orderTitle: "Simple and effortless" },
     steps: { oneTitle: "1. Choose your item", oneText: "Browse products, read details, and pick the item you love.", twoTitle: "2. Order on WhatsApp", twoText: "Tap Buy Now or Order Now and your request opens directly in WhatsApp.", threeTitle: "3. We confirm it", threeText: "We confirm your order and provide the next step for delivery." },
-    footer: { text: "© 2026 Xeeroo. Built for GitHub Pages and custom domains." },
+    footer: { text: "Copyright by Xeeroo 2026" },
     product: { notFound: "Product not found", notFoundText: "Sorry, this product could not be found.", why: "Why customers love it", features: "Key features", noProducts: "No products found for this category." },
     actions: { viewDetails: "View Details", orderNow: "Order Now", buyNow: "Buy Now" }
   },
@@ -70,7 +70,7 @@ const translations = {
     hero: { eyebrow: "স্মার্ট · ফাস্ট · প্রিমিয়াম", title: "আপনার ব্র্যান্ডের জন্য একটি পরিশীলিত স্টোরফ্রন্ট", text: "একটি আধুনিক দ্বিভাষিক শপিং অভিজ্ঞতা তৈরি করুন যেখানে প্রফেশনাল লেআউট, সহজ পণ্য ব্রাউজিং এবং WhatsApp অর্ডার একসাথে আছে।", badge1: "নতুন আসা", badge2: "দ্রুত অর্ডার", cardTitle: "আধুনিক ব্র্যান্ডের জন্য একটি প্রিমিয়াম অনলাইন স্টোর", point1: "স্মুথ ল্যান্ডিং এক্সপেরিয়েন্স", point2: "ক্যাটাগরি অনুযায়ি পণ্য ব্রাউজিং", point3: "WhatsApp অর্ডার ফ্লো" },
     section: { categories: "ক্যাটাগরি", chooseCategory: "আপনার স্টাইলে মানানসই বেছে নিন", featured: "ফিচার্ড পণ্য", featuredTitle: "আপনার কাস্টমারের জন্য সেরা পছন্দ", products: "পণ্যসমূহ", productsTitle: "ক্যাটাগরি অনুযায়ি পণ্য দেখুন", orderProcess: "অর্ডার প্রক্রিয়া", orderTitle: "সহজ ও নির্ভরযোগ্য" },
     steps: { oneTitle: "১. আপনার পণ্য বাছুন", oneText: "পণ্য দেখুন, বিস্তারিত পড়ুন এবং পছন্দের আইটেম বেছে নিন।", twoTitle: "২. WhatsApp-এ অর্ডার করুন", twoText: "Buy Now বা Order Now ক্লিক করলেই আপনার অনুরোধ সরাসরি WhatsApp-এ খুলে যাবে।", threeTitle: "৩. আমরা কনফার্ম করব", threeText: "আমরা আপনার অর্ডার কনফার্ম করব এবং পরবর্তী ধাপ জানাবো।" },
-    footer: { text: "© ২০২৬ এক্সিরু। GitHub Pages ও কাস্টম ডোমেইনের জন্য তৈরি।" },
+    footer: { text: "Copyright by Xeeroo 2026" },
     product: { notFound: "পণ্যটি পাওয়া যায়নি", notFoundText: "দুঃখিত, এই পণ্যটি পাওয়া যায়নি।", why: "কেন গ্রাহকরা পছন্দ করেন", features: "মূল বৈশিষ্ট্য", noProducts: "এই ক্যাটাগরিতে কোন পণ্য নেই।" },
     actions: { viewDetails: "বিস্তারিত দেখুন", orderNow: "অর্ডার করুন", buyNow: "এখনই কিনুন" }
   }
@@ -175,6 +175,10 @@ function buildMessengerLink(product) {
   return `https://m.me/XEEROO.0?text=${encodeURIComponent(message)}`;
 }
 
+function buildInstagramLink(product) {
+  return `https://www.instagram.com/XEEROO.0/`;
+}
+
 function renderFeaturedProducts() {
   const container = document.getElementById("featured-products");
   if (!container) return;
@@ -182,7 +186,7 @@ function renderFeaturedProducts() {
   const featured = products.slice(0, 3);
   container.innerHTML = featured
     .map((product) => `
-      <article class="card" onclick="window.location.href='product-details.html?product=${product.id}'">
+      <article class="card" onclick="window.location.href='/product-details.html?product=${product.id}'">
         <div class="card-media">
           ${getProductImage(product)
             ? `<img class="product-image" src="${getProductImage(product)}" alt="${getLocalized(product, "title")}" />`
@@ -193,9 +197,8 @@ function renderFeaturedProducts() {
         <p>${getLocalized(product, "description")}</p>
         <p class="price">${product.price}</p>
         <div class="card-actions">
-          <a class="button button-secondary" href="product-details.html?product=${product.id}" onclick="event.stopPropagation()">${translations[currentLanguage].cta.viewDetails}</a>
-          <a class="button button-primary" href="${buildWhatsAppLink(product)}" target="_blank" onclick="event.stopPropagation()">${translations[currentLanguage].cta.buyNow}</a>
-          <a class="button button-secondary" href="${buildMessengerLink(product)}" target="_blank" onclick="event.stopPropagation()" aria-label="Message on Messenger">💬</a>
+          <a class="button button-secondary" href="/product-details.html?product=${product.id}" onclick="event.stopPropagation()">${translations[currentLanguage].cta.viewDetails}</a>
+          <a class="button button-primary button-icon" href="${buildWhatsAppLink(product)}" target="_blank" onclick="event.stopPropagation()" aria-label="WhatsApp"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.buyNow}</a>
         </div>
       </article>
     `)
@@ -241,7 +244,7 @@ function renderProducts(activeCategory = "All") {
 
   container.innerHTML = filteredProducts
     .map((product) => `
-      <article class="card" onclick="window.location.href='product-details.html?product=${product.id}'">
+      <article class="card" onclick="window.location.href='/product-details.html?product=${product.id}'">
         <div class="card-media">
           ${getProductImage(product)
             ? `<img class="product-image" src="${getProductImage(product)}" alt="${getLocalized(product, "title")}" />`
@@ -252,9 +255,8 @@ function renderProducts(activeCategory = "All") {
         <p>${getLocalized(product, "description")}</p>
         <p class="price">${product.price}</p>
         <div class="card-actions">
-          <a class="button button-secondary" href="product-details.html?product=${product.id}" onclick="event.stopPropagation()">${translations[currentLanguage].cta.viewDetails}</a>
-          <a class="button button-primary" href="${buildWhatsAppLink(product)}" target="_blank" onclick="event.stopPropagation()">${translations[currentLanguage].cta.orderNow}</a>
-          <a class="button button-secondary" href="${buildMessengerLink(product)}" target="_blank" onclick="event.stopPropagation()" aria-label="Message on Messenger">💬</a>
+          <a class="button button-secondary" href="/product-details.html?product=${product.id}" onclick="event.stopPropagation()">${translations[currentLanguage].cta.viewDetails}</a>
+          <a class="button button-primary button-icon" href="${buildWhatsAppLink(product)}" target="_blank" onclick="event.stopPropagation()" aria-label="WhatsApp"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.orderNow}</a>
         </div>
       </article>
     `)
@@ -300,9 +302,10 @@ function renderProductDetails() {
           ${(getLocalized(product, "features") || []).map((feature) => `<li>${feature}</li>`).join("")}
         </ul>
         <div class="card-actions">
-          <a class="button button-primary" href="${buildWhatsAppLink(product)}" target="_blank">${translations[currentLanguage].cta.orderViaWhatsApp}</a>
-          <a class="button button-secondary" href="${buildMessengerLink(product)}" target="_blank">💬 Messenger</a>
-          <a class="button button-secondary" href="products.html">${translations[currentLanguage].cta.backToProducts}</a>
+          <a class="button button-primary button-icon" href="${buildWhatsAppLink(product)}" target="_blank"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.orderViaWhatsApp}</a>
+          <a class="button button-secondary button-icon" href="${buildMessengerLink(product)}" target="_blank"><img src="/messenger.png" alt="Messenger" /> Messenger</a>
+          <a class="button button-secondary button-icon" href="${buildInstagramLink(product)}" target="_blank"><img src="/instagram.png" alt="Instagram" /> Instagram</a>
+          <a class="button button-secondary" href="/products.html">${translations[currentLanguage].cta.backToProducts}</a>
         </div>
       </div>
     </div>
