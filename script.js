@@ -58,7 +58,7 @@ const translations = {
     hero: { eyebrow: "Smart · Fast · Elegant", title: "A polished storefront for your brand", text: "Launch a modern bilingual shopping experience with a professional layout, simple product browsing, and WhatsApp ordering built in.", badge1: "New Arrival", badge2: "Fast Order", cardTitle: "A premium online store for modern brands", point1: "Elegant landing experience", point2: "Category-based product browsing", point3: "WhatsApp order flow" },
     section: { categories: "Categories", chooseCategory: "Choose what fits your style", featured: "Featured products", featuredTitle: "Top picks for your customers", products: "Products", productsTitle: "Browse products by category", orderProcess: "Order process", orderTitle: "Simple and effortless" },
     steps: { oneTitle: "1. Choose your item", oneText: "Browse products, read details, and pick the item you love.", twoTitle: "2. Order on WhatsApp", twoText: "Tap Buy Now or Order Now and your request opens directly in WhatsApp.", threeTitle: "3. We confirm it", threeText: "We confirm your order and provide the next step for delivery." },
-    footer: { text: "Copyright by Xeeroo 2026" },
+    footer: { text: "Copyright © 2026 XEEROO. All rights reserved." },
     product: { notFound: "Product not found", notFoundText: "Sorry, this product could not be found.", why: "Why customers love it", features: "Key features", noProducts: "No products found for this category." },
     actions: { viewDetails: "View Details", orderNow: "Order Now", buyNow: "Buy Now" }
   },
@@ -70,7 +70,7 @@ const translations = {
     hero: { eyebrow: "স্মার্ট · ফাস্ট · প্রিমিয়াম", title: "আপনার ব্র্যান্ডের জন্য একটি পরিশীলিত স্টোরফ্রন্ট", text: "একটি আধুনিক দ্বিভাষিক শপিং অভিজ্ঞতা তৈরি করুন যেখানে প্রফেশনাল লেআউট, সহজ পণ্য ব্রাউজিং এবং WhatsApp অর্ডার একসাথে আছে।", badge1: "নতুন আসা", badge2: "দ্রুত অর্ডার", cardTitle: "আধুনিক ব্র্যান্ডের জন্য একটি প্রিমিয়াম অনলাইন স্টোর", point1: "স্মুথ ল্যান্ডিং এক্সপেরিয়েন্স", point2: "ক্যাটাগরি অনুযায়ি পণ্য ব্রাউজিং", point3: "WhatsApp অর্ডার ফ্লো" },
     section: { categories: "ক্যাটাগরি", chooseCategory: "আপনার স্টাইলে মানানসই বেছে নিন", featured: "ফিচার্ড পণ্য", featuredTitle: "আপনার কাস্টমারের জন্য সেরা পছন্দ", products: "পণ্যসমূহ", productsTitle: "ক্যাটাগরি অনুযায়ি পণ্য দেখুন", orderProcess: "অর্ডার প্রক্রিয়া", orderTitle: "সহজ ও নির্ভরযোগ্য" },
     steps: { oneTitle: "১. আপনার পণ্য বাছুন", oneText: "পণ্য দেখুন, বিস্তারিত পড়ুন এবং পছন্দের আইটেম বেছে নিন।", twoTitle: "২. WhatsApp-এ অর্ডার করুন", twoText: "Buy Now বা Order Now ক্লিক করলেই আপনার অনুরোধ সরাসরি WhatsApp-এ খুলে যাবে।", threeTitle: "৩. আমরা কনফার্ম করব", threeText: "আমরা আপনার অর্ডার কনফার্ম করব এবং পরবর্তী ধাপ জানাবো।" },
-    footer: { text: "Copyright by Xeeroo 2026" },
+    footer: { text: "Copyright © 2026 XEEROO. All rights reserved." },
     product: { notFound: "পণ্যটি পাওয়া যায়নি", notFoundText: "দুঃখিত, এই পণ্যটি পাওয়া যায়নি।", why: "কেন গ্রাহকরা পছন্দ করেন", features: "মূল বৈশিষ্ট্য", noProducts: "এই ক্যাটাগরিতে কোন পণ্য নেই।" },
     actions: { viewDetails: "বিস্তারিত দেখুন", orderNow: "অর্ডার করুন", buyNow: "এখনই কিনুন" }
   }
