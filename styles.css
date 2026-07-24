@@ -52,8 +52,10 @@ button {
   justify-content: space-between;
   gap: 0.8rem;
   padding: 1rem 1rem;
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   backdrop-filter: blur(16px);
   background: rgba(7, 17, 31, 0.86);
   border-bottom: 1px solid var(--border);
@@ -167,7 +169,7 @@ main {
   width: min(1120px, calc(100% - 2rem));
   max-width: 1120px;
   margin: 0 auto;
-  padding: 0 1rem 3rem;
+  padding: 4.5rem 1rem 3rem;
 }
 
 .hero {
@@ -282,7 +284,6 @@ main {
   padding: 0.55rem 0 0.7rem;
   margin-top: 0;
   border-bottom: 1px solid var(--border);
-  transform: translateZ(0);
 }
 
 .slim-chip-list {
@@ -454,6 +455,22 @@ main {
   margin-top: 0.8rem;
 }
 
+.related-products {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.related-products .product-grid {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 700px) {
+  .related-products .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .detail-card {
   padding: 1.3rem;
   margin-top: 1rem;
@@ -530,6 +547,86 @@ main {
   padding: 2rem 1rem 2.5rem;
 }
 
+/* Full-screen gallery overlay */
+.gallery-overlay {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.92);
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  cursor: pointer;
+}
+
+.gallery-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.gallery-overlay img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  cursor: default;
+}
+
+.gallery-overlay .close-btn {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #fff;
+  font-size: 1.6rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.gallery-overlay .close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.gallery-overlay .nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #fff;
+  font-size: 1.8rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.gallery-overlay .nav-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.gallery-overlay .nav-btn.prev {
+  left: 1.2rem;
+}
+
+.gallery-overlay .nav-btn.next {
+  right: 1.2rem;
+}
+
 @media (max-width: 900px) {
   .hero,
   .detail-grid,
@@ -540,10 +637,6 @@ main {
   .nav-links,
   .topbar-actions .button {
     display: none;
-  }
-
-  .topbar {
-    position: sticky;
   }
 }
 

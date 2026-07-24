@@ -42,6 +42,28 @@ const products = [
       bn: ["মেটাল বডি", "ওয়াটার রেজিস্ট্যান্ট", "শৈলীসম্পন্ন ফিনিশ"]
     },
     tag: { en: "Popular", bn: "জনপ্রিয়" }
+  },
+  {
+    id: "smart-watch",
+    category: "Watch",
+    price: "৳8,900",
+    emoji: "⌚",
+    coverImage: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1546868871-af0de0ae72b7?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1000&q=80"
+    ],
+    title: { en: "Smart Watch", bn: "স্মার্ট ওয়াচ" },
+    description: {
+      en: "Stay connected with style and smart features.",
+      bn: "স্টাইল ও স্মার্ট ফিচারের সাথে সংযুক্ত থাকুন।"
+    },
+    features: {
+      en: ["Heart rate monitor", "GPS tracking", "Water resistant"],
+      bn: ["হার্ট রেট মনিটর", "জিপিএস ট্র্যাকিং", "ওয়াটার রেজিস্ট্যান্ট"]
+    },
+    tag: { en: "Trending", bn: "ট্রেন্ডিং" }
   }
 ];
 
@@ -160,9 +182,10 @@ function getProductImage(product) {
 
 function buildWhatsAppLink(product) {
   const title = getLocalized(product, "title");
+  const productUrl = `${window.location.origin}/product-details.html?product=${product.id}`;
   const message = currentLanguage === "bn"
-    ? `হ্যালো! আমি ${title} অর্ডার করতে চাই। দাম: ${product.price}। অনুগ্রহ করে উপলব্ধতা নিশ্চিত করুন।`
-    : `Hello! I want to order ${title}. Price: ${product.price}. Please confirm availability.`;
+    ? `হ্যালো! আমি ${title} অর্ডার করতে চাই। দাম: ${product.price}।\nপণ্যটি দেখুন: ${productUrl}\nঅনুগ্রহ করে উপলব্ধতা নিশ্চিত করুন।`
+    : `Hello! I want to order ${title}. Price: ${product.price}.\nView product: ${productUrl}\nPlease confirm availability.`;
   return `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
@@ -173,6 +196,10 @@ function buildMessengerLink(product) {
     ? `হ্যালো! আমি ${title} দেখেছি। এই পণ্যের বিস্তারিত জানতে চাই। ${productUrl}`
     : `Hello! I saw ${title}. I would like to know more about this product. ${productUrl}`;
   return `https://m.me/XEEROO.0?text=${encodeURIComponent(message)}`;
+}
+
+function buildFacebookLink(product) {
+  return `https://www.facebook.com/XEEROO.0/`;
 }
 
 function buildInstagramLink(product) {
@@ -223,6 +250,7 @@ function renderCategoryBar(activeCategory = "All") {
       const url = new URL(window.location.href);
       url.searchParams.set("category", nextCategory);
       window.history.replaceState({}, "", url);
+      renderCategoryBar(nextCategory);
       renderProducts(nextCategory);
     });
   });
@@ -278,6 +306,33 @@ function renderProductDetails() {
 
   const galleryImages = getGalleryImages(product);
   const mainImage = getProductImage(product);
+  let currentImageIndex = 0;
+
+  function openFullScreen(index) {
+    currentImageIndex = index;
+    const overlay = document.getElementById("gallery-overlay");
+    const overlayImg = overlay.querySelector(".gallery-overlay-img");
+    overlayImg.src = galleryImages[currentImageIndex];
+    overlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeFullScreen() {
+    const overlay = document.getElementById("gallery-overlay");
+    overlay.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  function navigateGallery(direction) {
+    currentImageIndex += direction;
+    if (currentImageIndex < 0) currentImageIndex = galleryImages.length - 1;
+    if (currentImageIndex >= galleryImages.length) currentImageIndex = 0;
+    const overlayImg = document.querySelector("#gallery-overlay .gallery-overlay-img");
+    overlayImg.src = galleryImages[currentImageIndex];
+  }
+
+  // Get related products from same category (excluding current product)
+  const relatedProducts = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
 
   container.innerHTML = `
     <div class="detail-top">
@@ -290,7 +345,7 @@ function renderProductDetails() {
     <div class="detail-grid">
       <div class="card detail-media-card">
         <div class="detail-media">
-          <img id="main-product-image" class="detail-main-image" src="${mainImage}" alt="${getLocalized(product, "title")}" />
+          <img id="main-product-image" class="detail-main-image" src="${mainImage}" alt="${getLocalized(product, "title")}" style="cursor:pointer" />
           ${galleryImages.length ? `<div class="gallery-thumbs">${galleryImages.map((image, index) => `<button class="thumb-btn ${index === 0 ? "active" : ""}" data-image="${image}" data-index="${index}" type="button"><img src="${image}" alt="${getLocalized(product, "title")} ${index + 1}" /></button>`).join("")}</div>` : ""}
         </div>
       </div>
@@ -303,22 +358,70 @@ function renderProductDetails() {
         </ul>
         <div class="card-actions">
           <a class="button button-primary button-icon" href="${buildWhatsAppLink(product)}" target="_blank"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.orderViaWhatsApp}</a>
-          <a class="button button-secondary button-icon" href="${buildMessengerLink(product)}" target="_blank"><img src="/messenger.png" alt="Messenger" /> Messenger</a>
+          <a class="button button-secondary button-icon" href="${buildFacebookLink(product)}" target="_blank"><img src="/facebook.png" alt="Facebook" /> Facebook</a>
           <a class="button button-secondary button-icon" href="${buildInstagramLink(product)}" target="_blank"><img src="/instagram.png" alt="Instagram" /> Instagram</a>
           <a class="button button-secondary" href="/products.html">${translations[currentLanguage].cta.backToProducts}</a>
         </div>
       </div>
     </div>
+    ${relatedProducts.length > 0 ? `
+    <div class="related-products">
+      <h3>${currentLanguage === "bn" ? "একই ক্যাটাগরির পণ্য" : "More from this category"}</h3>
+      <div class="product-grid">
+        ${relatedProducts.map((rp) => `
+          <article class="card" onclick="window.location.href='/product-details.html?product=${rp.id}'">
+            <div class="card-media">
+              ${getProductImage(rp) ? `<img class="product-image" src="${getProductImage(rp)}" alt="${getLocalized(rp, "title")}" />` : `<div class="card-emoji">${rp.emoji}</div>`}
+            </div>
+            <p class="eyebrow">${getLocalized(rp, "tag")}</p>
+            <h3>${getLocalized(rp, "title")}</h3>
+            <p class="price">${rp.price}</p>
+            <div class="card-actions">
+              <a class="button button-secondary" href="/product-details.html?product=${rp.id}" onclick="event.stopPropagation()">${translations[currentLanguage].cta.viewDetails}</a>
+              <a class="button button-primary button-icon" href="${buildWhatsAppLink(rp)}" target="_blank" onclick="event.stopPropagation()" aria-label="WhatsApp"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.buyNow}</a>
+            </div>
+          </article>
+        `).join("")}
+      </div>
+    </div>` : ""}
   `;
+
+  const mainImageElement = container.querySelector("#main-product-image");
+  if (mainImageElement) {
+    mainImageElement.addEventListener("click", () => {
+      const activeIndex = galleryImages.indexOf(mainImageElement.src);
+      openFullScreen(activeIndex >= 0 ? activeIndex : 0);
+    });
+  }
 
   container.querySelectorAll(".thumb-btn").forEach((button) => {
     button.addEventListener("click", () => {
-      const mainImageElement = container.querySelector("#main-product-image");
       if (!mainImageElement) return;
       mainImageElement.src = button.dataset.image;
       container.querySelectorAll(".thumb-btn").forEach((thumb) => thumb.classList.toggle("active", thumb === button));
     });
+    button.addEventListener("dblclick", () => {
+      const index = parseInt(button.dataset.index, 10);
+      openFullScreen(index);
+    });
   });
+
+  // Full-screen overlay event listeners
+  const overlay = document.getElementById("gallery-overlay");
+  if (overlay) {
+    overlay.querySelector(".close-btn").addEventListener("click", closeFullScreen);
+    overlay.querySelector(".nav-btn.prev").addEventListener("click", () => navigateGallery(-1));
+    overlay.querySelector(".nav-btn.next").addEventListener("click", () => navigateGallery(1));
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) closeFullScreen();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (!overlay.classList.contains("open")) return;
+      if (e.key === "Escape") closeFullScreen();
+      if (e.key === "ArrowLeft") navigateGallery(-1);
+      if (e.key === "ArrowRight") navigateGallery(1);
+    });
+  }
 }
 
 let lastScrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
