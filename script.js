@@ -1,67 +1,46 @@
 const products = [
   {
-    id: "girls-gown",
-    category: "Fashion",
-    price: "৳5,500",
-    emoji: "👗",
-    coverImage: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=80",
+    id: "skin-care",
+    category: "Beauty & Cosmetics",
+    price: "৳1,399",
+    emoji: "⌚",
+    coverImage: "https://ae-pic-a1.aliexpress-media.com/kf/S90bc1d23acbc44dcb9993d038097ddcdr.jpg",
     galleryImages: [
-      "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1000&q=80"
+      "https://ae-pic-a1.aliexpress-media.com/kf/Sec6cec7b3ca34a7a90cd47678762eaacx.jpg",
+      "https://ae-pic-a1.aliexpress-media.com/kf/Sb58c0f0ab7c646468c9eba5bd51e21804.jpg",
+      "https://ae-pic-a1.aliexpress-media.com/kf/Sbad78bc5ae6f44a68571f3f9d0d6b3a6N.jpg",
+      "https://ae-pic-a1.aliexpress-media.com/kf/S3fb240f743204b15a01631134355a4dfM.png"
     ],
-    title: { en: "Girls Gown", bn: "গার্লস গাউন" },
+    title: { en: "Snail Collagen Day & Night Cream Set - 2-in-1 Brightening & Firming Restores Clarity & Elasticity", bn: "Snail Collagen Day & Night Cream Set - 2-in-1 Brightening & Firming Restores Clarity & Elasticity" },
     description: {
-      en: "Elegant and graceful for special occasions.",
-      bn: "বিশেষ অনুষ্ঠানের জন্য অনিন্দ্য ও মার্জিত।"
+      en: "Moisturizing Formula for All-Day Hydration The moisturizing formula deeply hydrates the skin, ensuring a soft, supple feel throughout the day and night, ideal for maintaining a healthy, glowing complexion..",
+      bn: "Moisturizing Formula for All-Day Hydration The moisturizing formula deeply hydrates the skin, ensuring a soft, supple feel throughout the day and night, ideal for maintaining a healthy, glowing complexion."
     },
     features: {
-      en: ["Premium fabric", "Comfort fit", "Ready to wear"],
-      bn: ["প্রিমিয়াম কাপড়", "আরামদায়ক ফিট", "সাজে প্রস্তুত"]
+      en: ["20g Day Cream", "20g Night Cream", "Suitable for all skin types"],
+      bn: ["20g দিনের ক্রিম", "20g রাতের ক্রিম", "সব ত্বকের জন্য উপযুক্ত"]
     },
-    tag: { en: "New", bn: "নতুন" }
+    tag: { en: "Trending", bn: "ট্রেন্ডিং" }
   },
   {
-    id: "luxury-watch",
-    category: "Accessories",
-    price: "৳8,900",
+    id: "799-razor",
+    category: "Beauty & Cosmetics",
+    price: "৳250",
     emoji: "⌚",
-    coverImage: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=1000&q=80",
+    coverImage: "https://assets.zipper.com.bd/uploads/products/1200/4g4gapiv-alshabab-shaving-razors-1.webp",
     galleryImages: [
-      "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=1000&q=80"
+      "https://assets.zipper.com.bd/uploads/products/1200/4g4gapiv-alshabab-shaving-razors.webp",
+      "https://assets.zipper.com.bd/uploads/products/1200/4g4gapiv-alshabab-shaving-razors-2.webp"
+      
     ],
-    title: { en: "Luxury Watch", bn: "লাক্সারি ওয়াচ" },
+    title: { en: "Double Edge Safety Razor for Men | Stainless Steel Razor", bn: "রেজার পুরুষ দের জন্য | স্টেইনলেস স্টিল রেজার" },
     description: {
-      en: "A stylish statement piece for everyday elegance.",
-      bn: "দৈনন্দিন সাজে স্টাইলিশ একটি ঘোষণা।"
+      en: "Classic art of wet shaving with Alsabb Double Edge stainless steel safety razor. Comfortable and environmentally friendly Shaving Razors. Made with accurate and durability.",
+      bn: "Alshabab ডাবল এজ স্টেইনলেস স্টিল সেফটি রেজার দিয়ে ভেজা শেভিং এর ক্লাসিক আর্ট। আরামদায়ক এবং পরিবেশ বান্ধব শেভিং রেজার। সঠিকতা এবং স্থায়িত্বের সাথে তৈরি।"
     },
     features: {
-      en: ["Metal body", "Water resistant", "Elegant finish"],
-      bn: ["মেটাল বডি", "ওয়াটার রেজিস্ট্যান্ট", "শৈলীসম্পন্ন ফিনিশ"]
-    },
-    tag: { en: "Popular", bn: "জনপ্রিয়" }
-  },
-  {
-    id: "smart-watch",
-    category: "Watch",
-    price: "৳8,900",
-    emoji: "⌚",
-    coverImage: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1546868871-af0de0ae72b7?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1000&q=80"
-    ],
-    title: { en: "Smart Watch", bn: "স্মার্ট ওয়াচ" },
-    description: {
-      en: "Stay connected with style and smart features.",
-      bn: "স্টাইল ও স্মার্ট ফিচারের সাথে সংযুক্ত থাকুন।"
-    },
-    features: {
-      en: ["Heart rate monitor", "GPS tracking", "Water resistant"],
-      bn: ["হার্ট রেট মনিটর", "জিপিএস ট্র্যাকিং", "ওয়াটার রেজিস্ট্যান্ট"]
+      en: ["Double edge design","High-quality stainless steel.", "Suitable for all skin types.", "Easy to use and maintain."],
+      bn: ["ডাবল এজ ডিজাইন", "উচ্চ গুণসম্পন্ন স্টেইনলেস স্টিল।", "সব ত্বকের জন্য উপযুক্ত।", "ব্যবহার ও রক্ষণাবেদনে সহজ।"]
     },
     tag: { en: "Trending", bn: "ট্রেন্ডিং" }
   }
