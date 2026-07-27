@@ -43,6 +43,29 @@ const products = [
       bn: ["ডাবল এজ ডিজাইন", "উচ্চ গুণসম্পন্ন স্টেইনলেস স্টিল।", "সব ত্বকের জন্য উপযুক্ত।", "ব্যবহার ও রক্ষণাবেদনে সহজ।"]
     },
     tag: { en: "Trending", bn: "ট্রেন্ডিং" }
+  },
+  {
+    id: "skin-caree",
+    category: "Cosmetics",
+    price: "৳PRICE",
+    emoji: "⌚",
+    coverImage: "thumb image",
+    galleryImages: [
+      "img-1",
+      "img-2",
+      "img-3",
+      "img-4"
+    ],
+    title: { en: "eng-title", bn: "bangle-title" },
+    description: {
+      en: "eng-desc",
+      bn: "bangla-des"
+    },
+    features: {
+      en: ["features in eng"],
+      bn: ["bangla feature"]
+    },
+    tag: { en: "Trending", bn: "ট্রেন্ডিং" }
   }
 ];
 
@@ -65,17 +88,45 @@ const translations = {
   },
   bn: {
     nav: { home: "হোম", products: "পণ্য", categories: "ক্যাটাগরি", contact: "যোগাযোগ" },
-    cta: { shop: "এখনই দেখুন", howItWorks: "কীভাবে কাজ করে", viewDetails: "বিস্তারিত দেখুন", buyNow: "এখনই কিনুন", orderNow: "অর্ডার করুন", orderViaWhatsApp: "WhatsApp-এ অর্ডার করুন", backToProducts: "← পণ্য তালিকায় ফিরে যান" },
-    common: { all: "সব", viewAll: "সব দেখুন", backToProducts: "← পণ্য তালিকায় ফিরে যান" },
+    cta: { shop: "এখনই দেখুন", howItWorks: "কীভাবে কাজ করে", viewDetails: "বিস্তারিত দেখুন", buyNow: "এখনই কিনুন", orderNow: "অর্ডার করুন", orderViaWhatsApp: "WhatsApp-এ অর্ডার করুন", backToProducts: "← পণ্য তালিকায় ফিরে যান" },
+    common: { all: "সব", viewAll: "সব দেখুন", backToProducts: "← পণ্য তালিকায় ফিরে যান" },
     categories: { accessories: "এক্সেসরিজ", homeDecor: "হোম ডেকর", fashion: "ফ্যাশন", tech: "টেক" },
-    hero: { eyebrow: "স্মার্ট · ফাস্ট · প্রিমিয়াম", title: "আপনার ব্র্যান্ডের জন্য একটি পরিশীলিত স্টোরফ্রন্ট", text: "একটি আধুনিক দ্বিভাষিক শপিং অভিজ্ঞতা তৈরি করুন যেখানে প্রফেশনাল লেআউট, সহজ পণ্য ব্রাউজিং এবং WhatsApp অর্ডার একসাথে আছে।", badge1: "নতুন আসা", badge2: "দ্রুত অর্ডার", cardTitle: "আধুনিক ব্র্যান্ডের জন্য একটি প্রিমিয়াম অনলাইন স্টোর", point1: "স্মুথ ল্যান্ডিং এক্সপেরিয়েন্স", point2: "ক্যাটাগরি অনুযায়ি পণ্য ব্রাউজিং", point3: "WhatsApp অর্ডার ফ্লো" },
-    section: { categories: "ক্যাটাগরি", chooseCategory: "আপনার স্টাইলে মানানসই বেছে নিন", featured: "ফিচার্ড পণ্য", featuredTitle: "আপনার কাস্টমারের জন্য সেরা পছন্দ", products: "পণ্যসমূহ", productsTitle: "ক্যাটাগরি অনুযায়ি পণ্য দেখুন", orderProcess: "অর্ডার প্রক্রিয়া", orderTitle: "সহজ ও নির্ভরযোগ্য" },
-    steps: { oneTitle: "১. আপনার পণ্য বাছুন", oneText: "পণ্য দেখুন, বিস্তারিত পড়ুন এবং পছন্দের আইটেম বেছে নিন।", twoTitle: "২. WhatsApp-এ অর্ডার করুন", twoText: "Buy Now বা Order Now ক্লিক করলেই আপনার অনুরোধ সরাসরি WhatsApp-এ খুলে যাবে।", threeTitle: "৩. আমরা কনফার্ম করব", threeText: "আমরা আপনার অর্ডার কনফার্ম করব এবং পরবর্তী ধাপ জানাবো।" },
+    hero: { eyebrow: "স্মার্ট · ফাস্ট · প্রিমিয়াম", title: "আপনার ব্র্যান্ডের জন্য একটি পরিশীলিত স্টোরফ্রন্ট", text: "একটি আধুনিক দ্বিভাষিক শপিং অভিজ্ঞতা তৈরি করুন যেখানে প্রফেশনাল লেআউট, সহজ পণ্য ব্রাউজিং এবং WhatsApp অর্ডার একসাথে আছে।", badge1: "নতুন আসা", badge2: "দ্রুত অর্ডার", cardTitle: "আধুনিক ব্র্যান্ডের জন্য একটি প্রিমিয়াম অনলাইন স্টোর", point1: "স্মুথ ল্যান্ডিং এক্সপেরিয়েন্স", point2: "ক্যাটাগরি অনুযায়ি পণ্য ব্রাউজিং", point3: "WhatsApp অর্ডার ফ্লো" },
+    section: { categories: "ক্যাটাগরি", chooseCategory: "আপনার স্টাইলে মানানসই বেছে নিন", featured: "ফিচার্ড পণ্য", featuredTitle: "আপনার কাস্টমারের জন্য সেরা পছন্দ", products: "পণ্যসমূহ", productsTitle: "ক্যাটাগরি অনুযায়ি পণ্য দেখুন", orderProcess: "অর্ডার প্রক্রিয়া", orderTitle: "সহজ ও নির্ভরযোগ্য" },
+    steps: { oneTitle: "১. আপনার পণ্য বাছুন", oneText: "পণ্য দেখুন, বিস্তারিত পড়ুন এবং পছন্দের আইটেম বেছে নিন।", twoTitle: "২. WhatsApp-এ অর্ডার করুন", twoText: "Buy Now বা Order Now ক্লিক করলেই আপনার অনুরোধ সরাসরি WhatsApp-এ খুলে যাবে।", threeTitle: "৩. আমরা কনফার্ম করব", threeText: "আমরা আপনার অর্ডার কনফার্ম করব এবং পরবর্তী ধাপ জানাবো।" },
     footer: { text: "Copyright © 2026 XEEROO. All rights reserved." },
-    product: { notFound: "পণ্যটি পাওয়া যায়নি", notFoundText: "দুঃখিত, এই পণ্যটি পাওয়া যায়নি।", why: "কেন গ্রাহকরা পছন্দ করেন", features: "মূল বৈশিষ্ট্য", noProducts: "এই ক্যাটাগরিতে কোন পণ্য নেই।" },
+    product: { notFound: "পণ্যটি পাওয়া যায়নি", notFoundText: "দুঃখিত, এই পণ্যটি পাওয়া যায়নি।", why: "কেন গ্রাহকরা পছন্দ করেন", features: "মূল বৈশিষ্ট্য", noProducts: "এই ক্যাটাগরিতে কোন পণ্য নেই।" },
     actions: { viewDetails: "বিস্তারিত দেখুন", orderNow: "অর্ডার করুন", buyNow: "এখনই কিনুন" }
   }
 };
+
+// --- Utility functions ---
+
+function slugify(text) {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function getProductSlug(product) {
+  const title = getLocalized(product, "title");
+  return slugify(title);
+}
+
+function getCategorySlug(category) {
+  return slugify(category);
+}
+
+function getProductUrl(product) {
+  const catSlug = getCategorySlug(product.category);
+  const prodSlug = getProductSlug(product);
+  return `/${catSlug}/${prodSlug}`;
+}
 
 function getLocalized(product, field) {
   if (product[field] && typeof product[field] === "object") {
@@ -114,10 +165,12 @@ function setLanguage(lang) {
     renderFeaturedProducts();
   }
   if (document.getElementById("products-grid")) {
-    renderProducts(new URLSearchParams(window.location.search).get("category") || "All");
+    const params = parseUrl();
+    renderProducts(params.category || "All");
   }
   if (document.getElementById("product-detail")) {
-    renderProductDetails();
+    const params = parseUrl();
+    renderProductDetails(params.productId);
   }
 }
 
@@ -134,10 +187,21 @@ function setTheme(theme) {
 
 function toggleMenu() {
   const menu = document.getElementById("mobile-menu");
-  const toggle = document.getElementById("menu-toggle");
-  if (!menu || !toggle) return;
+  const overlay = document.getElementById("mobile-overlay");
+  if (!menu) return;
   const isOpen = menu.classList.toggle("open");
-  toggle.setAttribute("aria-expanded", String(isOpen));
+  if (overlay) overlay.classList.toggle("open", isOpen);
+  document.getElementById("menu-toggle")?.setAttribute("aria-expanded", String(isOpen));
+  document.body.style.overflow = isOpen ? "hidden" : "";
+}
+
+function closeMenu() {
+  const menu = document.getElementById("mobile-menu");
+  const overlay = document.getElementById("mobile-overlay");
+  menu?.classList.remove("open");
+  overlay?.classList.remove("open");
+  document.getElementById("menu-toggle")?.setAttribute("aria-expanded", "false");
+  document.body.style.overflow = "";
 }
 
 function getProductById(id) {
@@ -161,20 +225,11 @@ function getProductImage(product) {
 
 function buildWhatsAppLink(product) {
   const title = getLocalized(product, "title");
-  const productUrl = `${window.location.origin}/product-details.html?product=${product.id}`;
+  const productUrl = `${window.location.origin}${getProductUrl(product)}`;
   const message = currentLanguage === "bn"
     ? `হ্যালো! আমি ${title} অর্ডার করতে চাই। দাম: ${product.price}।\nপণ্যটি দেখুন: ${productUrl}\nঅনুগ্রহ করে উপলব্ধতা নিশ্চিত করুন।`
     : `Hello! I want to order ${title}. Price: ${product.price}.\nView product: ${productUrl}\nPlease confirm availability.`;
   return `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
-}
-
-function buildMessengerLink(product) {
-  const title = getLocalized(product, "title");
-  const productUrl = `${window.location.origin}${window.location.pathname}?product=${product.id}`;
-  const message = currentLanguage === "bn"
-    ? `হ্যালো! আমি ${title} দেখেছি। এই পণ্যের বিস্তারিত জানতে চাই। ${productUrl}`
-    : `Hello! I saw ${title}. I would like to know more about this product. ${productUrl}`;
-  return `https://m.me/XEEROO.0?text=${encodeURIComponent(message)}`;
 }
 
 function buildFacebookLink(product) {
@@ -185,14 +240,127 @@ function buildInstagramLink(product) {
   return `https://www.instagram.com/XEEROO.0/`;
 }
 
+// --- SPA Router ---
+
+function parseUrl() {
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
+
+  // Home page
+  if (path === "/" || path === "/home" || path === "/index.html") {
+    return { page: "home" };
+  }
+
+  // Products page (no category filter)
+  if (path === "/products" || path === "/products.html") {
+    return { page: "products", category: "All" };
+  }
+
+  const parts = path.split("/").filter(Boolean);
+
+  // /products/category-slug/ — products page filtered by category
+  if (parts.length >= 2 && parts[0] === "products") {
+    const catSlug = parts[1];
+    // Find the matching category from products
+    for (const product of products) {
+      if (getCategorySlug(product.category) === catSlug) {
+        return { page: "products", category: product.category };
+      }
+    }
+    // If category not found, show all products
+    return { page: "products", category: "All" };
+  }
+
+  // /category-slug/product-slug — product detail page
+  if (parts.length >= 2) {
+    const catSlug = parts[0];
+    const prodSlug = parts[1];
+
+    // Find product by matching slugs
+    for (const product of products) {
+      if (getCategorySlug(product.category) === catSlug && getProductSlug(product) === prodSlug) {
+        return { page: "product-detail", productId: product.id };
+      }
+    }
+
+    // If we found a category but no product, show products page filtered by category
+    const matchingCat = products.find(p => getCategorySlug(p.category) === catSlug);
+    if (matchingCat) {
+      return { page: "products", category: matchingCat.category };
+    }
+
+    // Fallback - try direct product lookup by id
+    const productById = getProductById(parts[1]);
+    if (productById) {
+      return { page: "product-detail", productId: productById.id };
+    }
+  }
+
+  // If we have a single part that could be a category
+  if (parts.length === 1) {
+    const catSlug = parts[0];
+    const matchingCat = products.find(p => getCategorySlug(p.category) === catSlug);
+    if (matchingCat) {
+      return { page: "products", category: matchingCat.category };
+    }
+  }
+
+  return { page: "home" };
+}
+
+function navigateTo(url) {
+  window.history.pushState({}, "", url);
+  handleRoute();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function handleRoute() {
+  const params = parseUrl();
+  const page = params.page;
+
+  // Hide all pages
+  document.querySelectorAll("[id^='page-']").forEach((el) => {
+    el.style.display = "none";
+  });
+
+  // Show contact section only on home page
+  const contactSection = document.getElementById("contact");
+  if (contactSection) {
+    contactSection.style.display = page === "home" ? "" : "none";
+  }
+
+  if (page === "home") {
+    const pageEl = document.getElementById("page-home");
+    if (pageEl) {
+      pageEl.style.display = "";
+      renderFeaturedProducts();
+      renderHomeCategoryBar();
+    }
+  } else if (page === "products") {
+    const pageEl = document.getElementById("page-products");
+    if (pageEl) {
+      pageEl.style.display = "";
+      renderCategoryBar(params.category || "All");
+      renderProducts(params.category || "All");
+    }
+  } else if (page === "product-detail") {
+    const pageEl = document.getElementById("page-product-detail");
+    if (pageEl) {
+      pageEl.style.display = "";
+      renderProductDetails(params.productId);
+    }
+  }
+}
+
+// --- Render functions ---
+
 function renderFeaturedProducts() {
   const container = document.getElementById("featured-products");
   if (!container) return;
 
-  const featured = products.slice(0, 3);
+  const featured = products.slice(0, 6);
   container.innerHTML = featured
     .map((product) => `
-      <article class="card" onclick="window.location.href='/product-details.html?product=${product.id}'">
+      <article class="card home-card" onclick="navigateTo('${getProductUrl(product)}')">
         <div class="card-media">
           ${getProductImage(product)
             ? `<img class="product-image" src="${getProductImage(product)}" alt="${getLocalized(product, "title")}" />`
@@ -200,15 +368,37 @@ function renderFeaturedProducts() {
         </div>
         <p class="eyebrow">${getLocalized(product, "tag")}</p>
         <h3>${getLocalized(product, "title")}</h3>
-        <p>${getLocalized(product, "description")}</p>
+        <p class="card-desc">${getLocalized(product, "description")}</p>
         <p class="price">${product.price}</p>
         <div class="card-actions">
-          <a class="button button-secondary" href="/product-details.html?product=${product.id}" onclick="event.stopPropagation()">${translations[currentLanguage].cta.viewDetails}</a>
-          <a class="button button-primary button-icon" href="${buildWhatsAppLink(product)}" target="_blank" onclick="event.stopPropagation()" aria-label="WhatsApp"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.buyNow}</a>
+          <a class="button button-secondary" href="${getProductUrl(product)}" onclick="event.stopPropagation(); navigateTo('${getProductUrl(product)}'); return false;">${translations[currentLanguage].cta.viewDetails}</a>
+          <a class="button button-whatsapp button-icon" href="${buildWhatsAppLink(product)}" target="_blank" onclick="event.stopPropagation()" aria-label="WhatsApp"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.buyNow}</a>
         </div>
       </article>
     `)
     .join("");
+}
+
+function renderHomeCategoryBar() {
+  const container = document.getElementById("home-category-bar");
+  if (!container) return;
+
+  const categories = getCategoryList();
+  container.innerHTML = categories
+    .map((category) => {
+      const isActive = category === "All";
+      return `<button class="chip ${isActive ? "active" : ""}" data-category="${category}">${getCategoryLabel(category)}</button>`;
+    })
+    .join("");
+
+  container.querySelectorAll("button[data-category]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const nextCategory = button.getAttribute("data-category");
+      const catSlug = nextCategory === "All" ? "" : getCategorySlug(nextCategory);
+      const url = catSlug ? `/products/${catSlug}/` : "/products/";
+      navigateTo(url);
+    });
+  });
 }
 
 function renderCategoryBar(activeCategory = "All") {
@@ -226,11 +416,9 @@ function renderCategoryBar(activeCategory = "All") {
   container.querySelectorAll("button[data-category]").forEach((button) => {
     button.addEventListener("click", () => {
       const nextCategory = button.getAttribute("data-category");
-      const url = new URL(window.location.href);
-      url.searchParams.set("category", nextCategory);
-      window.history.replaceState({}, "", url);
-      renderCategoryBar(nextCategory);
-      renderProducts(nextCategory);
+      const catSlug = nextCategory === "All" ? "" : getCategorySlug(nextCategory);
+      const url = catSlug ? `/products/${catSlug}/` : "/products/";
+      navigateTo(url);
     });
   });
 }
@@ -251,7 +439,7 @@ function renderProducts(activeCategory = "All") {
 
   container.innerHTML = filteredProducts
     .map((product) => `
-      <article class="card" onclick="window.location.href='/product-details.html?product=${product.id}'">
+      <article class="card" onclick="navigateTo('${getProductUrl(product)}')">
         <div class="card-media">
           ${getProductImage(product)
             ? `<img class="product-image" src="${getProductImage(product)}" alt="${getLocalized(product, "title")}" />`
@@ -262,20 +450,18 @@ function renderProducts(activeCategory = "All") {
         <p>${getLocalized(product, "description")}</p>
         <p class="price">${product.price}</p>
         <div class="card-actions">
-          <a class="button button-secondary" href="/product-details.html?product=${product.id}" onclick="event.stopPropagation()">${translations[currentLanguage].cta.viewDetails}</a>
-          <a class="button button-primary button-icon" href="${buildWhatsAppLink(product)}" target="_blank" onclick="event.stopPropagation()" aria-label="WhatsApp"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.orderNow}</a>
+          <a class="button button-secondary" href="${getProductUrl(product)}" onclick="event.stopPropagation(); navigateTo('${getProductUrl(product)}'); return false;">${translations[currentLanguage].cta.viewDetails}</a>
+          <a class="button button-whatsapp button-icon" href="${buildWhatsAppLink(product)}" target="_blank" onclick="event.stopPropagation()" aria-label="WhatsApp"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.orderNow}</a>
         </div>
       </article>
     `)
     .join("");
 }
 
-function renderProductDetails() {
+function renderProductDetails(productId) {
   const container = document.getElementById("product-detail");
   if (!container) return;
 
-  const params = new URLSearchParams(window.location.search);
-  const productId = params.get("product");
   const product = getProductById(productId);
 
   if (!product) {
@@ -286,6 +472,8 @@ function renderProductDetails() {
   const galleryImages = getGalleryImages(product);
   const mainImage = getProductImage(product);
   let currentImageIndex = 0;
+  let touchStartX = 0;
+  let touchEndX = 0;
 
   function openFullScreen(index) {
     currentImageIndex = index;
@@ -308,6 +496,27 @@ function renderProductDetails() {
     if (currentImageIndex >= galleryImages.length) currentImageIndex = 0;
     const overlayImg = document.querySelector("#gallery-overlay .gallery-overlay-img");
     overlayImg.src = galleryImages[currentImageIndex];
+  }
+
+  function handleTouchStart(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }
+
+  function handleTouchEnd(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        navigateGallery(1);
+      } else {
+        navigateGallery(-1);
+      }
+    }
   }
 
   // Get related products from same category (excluding current product)
@@ -336,10 +545,10 @@ function renderProductDetails() {
           ${(getLocalized(product, "features") || []).map((feature) => `<li>${feature}</li>`).join("")}
         </ul>
         <div class="card-actions">
-          <a class="button button-primary button-icon" href="${buildWhatsAppLink(product)}" target="_blank"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.orderViaWhatsApp}</a>
+          <a class="button button-whatsapp button-icon" href="${buildWhatsAppLink(product)}" target="_blank"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.orderViaWhatsApp}</a>
           <a class="button button-secondary button-icon" href="${buildFacebookLink(product)}" target="_blank"><img src="/facebook.png" alt="Facebook" /> Facebook</a>
           <a class="button button-secondary button-icon" href="${buildInstagramLink(product)}" target="_blank"><img src="/instagram.png" alt="Instagram" /> Instagram</a>
-          <a class="button button-secondary" href="/products.html">${translations[currentLanguage].cta.backToProducts}</a>
+          <a class="button button-secondary" href="/products/" onclick="event.preventDefault(); navigateTo('/products/');">${translations[currentLanguage].cta.backToProducts}</a>
         </div>
       </div>
     </div>
@@ -348,7 +557,7 @@ function renderProductDetails() {
       <h3>${currentLanguage === "bn" ? "একই ক্যাটাগরির পণ্য" : "More from this category"}</h3>
       <div class="product-grid">
         ${relatedProducts.map((rp) => `
-          <article class="card" onclick="window.location.href='/product-details.html?product=${rp.id}'">
+          <article class="card" onclick="navigateTo('${getProductUrl(rp)}')">
             <div class="card-media">
               ${getProductImage(rp) ? `<img class="product-image" src="${getProductImage(rp)}" alt="${getLocalized(rp, "title")}" />` : `<div class="card-emoji">${rp.emoji}</div>`}
             </div>
@@ -356,8 +565,8 @@ function renderProductDetails() {
             <h3>${getLocalized(rp, "title")}</h3>
             <p class="price">${rp.price}</p>
             <div class="card-actions">
-              <a class="button button-secondary" href="/product-details.html?product=${rp.id}" onclick="event.stopPropagation()">${translations[currentLanguage].cta.viewDetails}</a>
-              <a class="button button-primary button-icon" href="${buildWhatsAppLink(rp)}" target="_blank" onclick="event.stopPropagation()" aria-label="WhatsApp"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.buyNow}</a>
+              <a class="button button-secondary" href="${getProductUrl(rp)}" onclick="event.stopPropagation(); navigateTo('${getProductUrl(rp)}'); return false;">${translations[currentLanguage].cta.viewDetails}</a>
+              <a class="button button-whatsapp button-icon" href="${buildWhatsAppLink(rp)}" target="_blank" onclick="event.stopPropagation()" aria-label="WhatsApp"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.buyNow}</a>
             </div>
           </article>
         `).join("")}
@@ -400,6 +609,10 @@ function renderProductDetails() {
       if (e.key === "ArrowLeft") navigateGallery(-1);
       if (e.key === "ArrowRight") navigateGallery(1);
     });
+
+    // Touch swipe support for gallery
+    overlay.addEventListener("touchstart", handleTouchStart, { passive: true });
+    overlay.addEventListener("touchend", handleTouchEnd, { passive: true });
   }
 }
 
@@ -428,28 +641,18 @@ function handleHeaderScroll() {
 }
 
 function initPage() {
-  const path = window.location.pathname.split("/").pop();
-  const params = new URLSearchParams(window.location.search);
-
   setTheme(currentTheme);
   setLanguage(currentLanguage);
-
-  if (path === "products.html") {
-    const activeCategory = params.get("category") || "All";
-    renderCategoryBar(activeCategory);
-    renderProducts(activeCategory);
-  } else if (path === "product-details.html") {
-    renderProductDetails();
-  } else {
-    renderFeaturedProducts();
-  }
+  handleRoute();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Language buttons
   document.querySelectorAll(".lang-btn").forEach((button) => {
     button.addEventListener("click", () => setLanguage(button.dataset.lang));
   });
 
+  // Theme toggle
   const themeToggle = document.getElementById("theme-toggle");
   if (themeToggle) {
     themeToggle.addEventListener("click", () => {
@@ -457,18 +660,48 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Mobile menu toggle (hamburger)
   const menuToggle = document.getElementById("menu-toggle");
   if (menuToggle) {
     menuToggle.addEventListener("click", toggleMenu);
   }
 
-  document.querySelectorAll(".mobile-menu a").forEach((link) => {
-    link.addEventListener("click", () => {
-      document.getElementById("mobile-menu")?.classList.remove("open");
-      document.getElementById("menu-toggle")?.setAttribute("aria-expanded", "false");
-    });
+  // Mobile menu close button
+  const menuClose = document.getElementById("mobile-menu-close");
+  if (menuClose) {
+    menuClose.addEventListener("click", closeMenu);
+  }
+
+  // Overlay click to close menu
+  const overlay = document.getElementById("mobile-overlay");
+  if (overlay) {
+    overlay.addEventListener("click", closeMenu);
+  }
+
+  // Close menu on link click
+  document.querySelectorAll(".mobile-menu-nav a").forEach((link) => {
+    link.addEventListener("click", closeMenu);
   });
+
+  // Intercept all navigation to use SPA routing
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a");
+    if (!link) return;
+    const href = link.getAttribute("href");
+    if (!href) return;
+    // Only intercept internal links (not external, not WhatsApp, not phone, not mailto, not hash)
+    if (href.startsWith("/") && !href.startsWith("//") && !href.startsWith("http") && !href.startsWith("tel:") && !href.startsWith("mailto:") && !href.startsWith("#")) {
+      e.preventDefault();
+      navigateTo(href);
+    }
+  });
+
+  // Handle browser back/forward
+  window.addEventListener("popstate", handleRoute);
 
   window.addEventListener("scroll", handleHeaderScroll, { passive: true });
   initPage();
 });
+
+// Make navigateTo globally accessible for onclick attributes
+window.navigateTo = navigateTo;
