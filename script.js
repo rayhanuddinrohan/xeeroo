@@ -368,7 +368,7 @@ function renderFeaturedProducts() {
         </div>
         <p class="eyebrow">${getLocalized(product, "tag")}</p>
         <h3>${getLocalized(product, "title")}</h3>
-        <p class="card-desc">${getLocalized(product, "description")}</p>
+        
         <p class="price">${product.price}</p>
         <div class="card-actions">
           <a class="button button-secondary" href="${getProductUrl(product)}" onclick="event.stopPropagation(); navigateTo('${getProductUrl(product)}'); return false;">${translations[currentLanguage].cta.viewDetails}</a>

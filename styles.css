@@ -850,4 +850,18 @@ main {
   .section-sticky {
     padding: 0.25rem 0 0.35rem;
   }
+
+  .home-card .card-actions .button {
+    padding: 0.25rem 0.3rem;
+    font-size: 0.65rem;
+  }
+
+  .home-card .card-actions .button-icon {
+    padding: 0.25rem 0.3rem;
+  }
+
+  .home-card .card-actions .button-icon img {
+    width: 0.7rem;
+    height: 0.7rem;
+  }
 }
