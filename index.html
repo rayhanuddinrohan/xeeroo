@@ -29,7 +29,7 @@
       <nav class="nav-links" aria-label="Main navigation">
         <a href="/" data-i18n="nav.home">Home</a>
         <a href="/products/" data-i18n="nav.products">Products</a>
-        <a href="/#contact" data-i18n="nav.contact">Contact</a>
+        <a href="/contact/" data-i18n="nav.contact">Contact</a>
       </nav>
 
       <div class="topbar-actions">
@@ -51,7 +51,7 @@
       <div class="mobile-menu-nav">
         <a href="/" data-i18n="nav.home">Home</a>
         <a href="/products/" data-i18n="nav.products">Products</a>
-        <a href="/#contact" data-i18n="nav.contact">Contact</a>
+        <a href="/contact/" data-i18n="nav.contact">Contact</a>
       </div>
       <div class="mobile-menu-controls">
         <div class="mobile-menu-controls-row">
@@ -117,7 +117,7 @@
 
       <!-- Products page content -->
       <div id="page-products" style="display:none">
-        <section class="section">
+        <section class="section section-sticky">
           <div class="section-heading">
             <div>
               <p class="eyebrow" data-i18n="section.products">Products</p>
@@ -136,6 +136,45 @@
           <div id="product-detail" class="detail-card"></div>
         </section>
       </div>
+
+      <!-- Contact page content -->
+      <div id="page-contact" style="display:none">
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Contact</p>
+              <h2>Get in touch</h2>
+            </div>
+          </div>
+          <div class="contact-grid">
+            <a class="contact-card" href="https://wa.me/8801570243005" target="_blank">
+              <img src="/whatsapp.png" alt="WhatsApp" />
+              <span>WhatsApp</span>
+              <small>+8801570243005</small>
+            </a>
+            <a class="contact-card" href="https://www.facebook.com/XEEROO.0/" target="_blank">
+              <img src="/facebook.png" alt="Facebook" />
+              <span>Facebook</span>
+              <small>XEEROO.0</small>
+            </a>
+            <a class="contact-card" href="https://www.instagram.com/XEEROO.0/" target="_blank">
+              <img src="/instagram.png" alt="Instagram" />
+              <span>Instagram</span>
+              <small>XEEROO.0</small>
+            </a>
+            <a class="contact-card" href="tel:+8801570243005">
+              <span class="contact-icon">📞</span>
+              <span>Call</span>
+              <small>+8801570243005</small>
+            </a>
+            <a class="contact-card" href="mailto:xeeroo.0@outlook.com">
+              <span class="contact-icon">✉️</span>
+              <span>Email</span>
+              <small>xeeroo.0@outlook.com</small>
+            </a>
+          </div>
+        </section>
+      </div>
     </main>
 
     <section class="section" id="contact">
@@ -145,11 +184,27 @@
           <h2>Get in touch</h2>
         </div>
       </div>
-      <div class="card" style="display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
-        <a class="button button-whatsapp button-icon" href="https://wa.me/8801570243005" target="_blank"><img src="/whatsapp.png" alt="WhatsApp" /> WhatsApp</a>
-        <a class="button button-secondary button-icon" href="https://www.facebook.com/XEEROO.0/" target="_blank"><img src="/facebook.png" alt="Facebook" /> Facebook</a>
-        <a class="button button-secondary button-icon" href="https://www.instagram.com/XEEROO.0/" target="_blank"><img src="/instagram.png" alt="Instagram" /> Instagram</a>
-        <a class="button button-secondary" href="tel:+8801570243005">Call: +8801570243005</a>
+      <div class="contact-bottom-grid">
+        <a class="contact-btn" href="https://www.facebook.com/XEEROO.0/" target="_blank">
+          <img src="/facebook.png" alt="Facebook" />
+          <span>Facebook</span>
+        </a>
+        <a class="contact-btn" href="https://www.instagram.com/XEEROO.0/" target="_blank">
+          <img src="/instagram.png" alt="Instagram" />
+          <span>Instagram</span>
+        </a>
+        <a class="contact-btn contact-btn-whatsapp" href="https://wa.me/8801570243005" target="_blank">
+          <img src="/whatsapp.png" alt="WhatsApp" />
+          <span>WhatsApp</span>
+        </a>
+        <a class="contact-btn" href="tel:+8801570243005">
+          <span class="contact-btn-icon">📞</span>
+          <span>Call</span>
+        </a>
+        <a class="contact-btn contact-btn-full" href="mailto:xeeroo.0@outlook.com">
+          <span class="contact-btn-icon">✉️</span>
+          <span>xeeroo.0@outlook.com</span>
+        </a>
       </div>
     </section>
 

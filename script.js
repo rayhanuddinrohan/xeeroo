@@ -255,6 +255,11 @@ function parseUrl() {
     return { page: "products", category: "All" };
   }
 
+  // Contact page
+  if (path === "/contact" || path === "/contact.html" || path === "/contact/") {
+    return { page: "contact" };
+  }
+
   const parts = path.split("/").filter(Boolean);
 
   // /products/category-slug/ — products page filtered by category
@@ -347,6 +352,11 @@ function handleRoute() {
     if (pageEl) {
       pageEl.style.display = "";
       renderProductDetails(params.productId);
+    }
+  } else if (page === "contact") {
+    const pageEl = document.getElementById("page-contact");
+    if (pageEl) {
+      pageEl.style.display = "";
     }
   }
 }
@@ -546,8 +556,6 @@ function renderProductDetails(productId) {
         </ul>
         <div class="card-actions">
           <a class="button button-whatsapp button-icon" href="${buildWhatsAppLink(product)}" target="_blank"><img src="/whatsapp.png" alt="WhatsApp" /> ${translations[currentLanguage].cta.orderViaWhatsApp}</a>
-          <a class="button button-secondary button-icon" href="${buildFacebookLink(product)}" target="_blank"><img src="/facebook.png" alt="Facebook" /> Facebook</a>
-          <a class="button button-secondary button-icon" href="${buildInstagramLink(product)}" target="_blank"><img src="/instagram.png" alt="Instagram" /> Instagram</a>
           <a class="button button-secondary" href="/products/" onclick="event.preventDefault(); navigateTo('/products/');">${translations[currentLanguage].cta.backToProducts}</a>
         </div>
       </div>
@@ -616,6 +624,7 @@ function renderProductDetails(productId) {
   }
 }
 
+// Hide topbar on scroll down, show on scroll up - category bar stays fixed
 let lastScrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
 const headerHideThreshold = 80;
 const headerScrollTolerance = 10;
