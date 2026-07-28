@@ -45,6 +45,30 @@ const products = [
     tag: { en: "Trending", bn: "ট্রেন্ডিং" }
   },
   {
+    id: "fluffy-powder",
+    category: "Cosmetics",
+    price: "৳350",
+    emoji: "⌚",
+    coverImage: "https://img.drz.lazcdn.com/static/bd/p/d6219f5e6a31824c4149c290de60c6d4.jpg_2200x2200q80.jpg_.webp",
+    galleryImages: [
+      "https://img.drz.lazcdn.com/static/bd/p/05a3281c4e3b584bd007fcfa33cb6c56.jpg_2200x2200q80.jpg_.webp",
+      "https://img.drz.lazcdn.com/static/bd/p/69b81b23c46ffd625ac1febc9d01e1c1.jpg_2200x2200q80.jpg_.webp",
+      "https://img.drz.lazcdn.com/static/bd/p/e0185b07cea2b0941eb0cf8b272cf95a.jpg_2200x2200q80.jpg_.webp",
+      "https://img.drz.lazcdn.com/static/bd/p/7f8b4de5353c9bbef65bfcf7ca123152.jpg_2200x2200q80.jpg_.webp"
+    ],
+    title: { en: "Hair Fluffy Powder Bangs to Oil Fluffy Powder", bn: "Hair Fluffy Powder Bangs to Oil Fluffy Powder" },
+    description: {
+      en: "Instant Volume: Adds instant lift and volume to your hair with a natural matte finish.Lightweight Formula: Absorbs excess oil without leaving hair sticky or heavy, keeping your style in place all day.Easy to Use: Sprinkle a small amount onto dry hair roots and style with your fingers.Natural & Safe: Colorless, odorless, residue-free formula that's suitable for all hair types and colors. Vegan and cruelty-free.Travel-Friendly: Compact and portable design, perfect for quick styling anytime, anywhere. Suitable for both men and women.",
+
+      bn: "ইনস্ট্যান্ট ভলিউম: আপনার চুলে প্রাকৃতিক ম্যাট ফিনিশ সহ তাৎক্ষণিক লিফট এবং ভলিউম যোগ করে। হালকা ওজনের সূত্র: অতিরিক্ত তেল শোষণ করে চুলকে আঠালো বা ভারী না রেখে, আপনার স্টাইল সারাদিন স্থানে রাখে। ব্যবহার করা সহজ: শুকনো চুলের মূলগুলিতে সামান্য পরিমাণ ছিটিয়ে দিন এবং আঙুল দিয়ে স্টাইল করুন। প্রাকৃতিক এবং নিরাপদ: রঙহীন, গন্ধহীন, অবশিষ্টাংশ-মুক্ত সূত্র যা সমস্ত চুলের ধরন এবং রঙের জন্য উপযুক্ত। ভেগান এবং নিষ্ঠুরতা-মুক্ত। ট্রাভেল-ফ্রেন্ডলি: কমপ্যাক্ট এবং পোর্টেবল ডিজাইন, যেকোনো সময়, যেকোনো জায়গায় দ্রুত স্টাইলিংয়ের জন্য উপযুক্ত। পুরুষ এবং মহিলাদের জন্য উপযুক্ত।"
+    },
+    features: {
+      en: ["roduct Name: Hair Fluffy Powder Texturizing Powder","Color: Black, Red", "Product Type: Hair Fluffy Powder", "Product Weight: 10g", "Suitable for all hair types"],
+      bn: [" পণ্যের নাম: হেয়ার ফ্লাফি পাউডার টেক্সচারাইজিং পাউডার", "পণ্যের ধরন: হেয়ার ফ্লাফি পাউডার", "পণ্যের ওজন: 10g", "সব ধরনের চুলের জন্য উপযুক্ত"]
+    },
+    tag: { en: "Trending", bn: "ট্রেন্ডিং" }
+  },
+  {
     id: "skin-caree",
     category: "Cosmetics",
     price: "৳PRICE",
@@ -66,7 +90,30 @@ const products = [
       bn: ["bangla feature"]
     },
     tag: { en: "Trending", bn: "ট্রেন্ডিং" }
-  }
+  },
+  // {
+  //   id: "skin-caree",
+  //   category: "Cosmetics",
+  //   price: "৳PRICE",
+  //   emoji: "⌚",
+  //   coverImage: "thumb image",
+  //   galleryImages: [
+  //     "img-1",
+  //     "img-2",
+  //     "img-3",
+  //     "img-4"
+  //   ],
+  //   title: { en: "eng-title", bn: "bangle-title" },
+  //   description: {
+  //     en: "eng-desc",
+  //     bn: "bangla-des"
+  //   },
+  //   features: {
+  //     en: ["features in eng"],
+  //     bn: ["bangla feature"]
+  //   },
+  //   tag: { en: "Trending", bn: "ট্রেন্ডিং" }
+  // }
 ];
 
 const PHONE_NUMBER = "8801570243005";
