@@ -68,29 +68,29 @@ const products = [
     },
     tag: { en: "Trending", bn: "ট্রেন্ডিং" }
   },
-  {
-    id: "skin-caree",
-    category: "Cosmetics",
-    price: "৳PRICE",
-    emoji: "⌚",
-    coverImage: "thumb image",
-    galleryImages: [
-      "img-1",
-      "img-2",
-      "img-3",
-      "img-4"
-    ],
-    title: { en: "eng-title", bn: "bangle-title" },
-    description: {
-      en: "eng-desc",
-      bn: "bangla-des"
-    },
-    features: {
-      en: ["features in eng"],
-      bn: ["bangla feature"]
-    },
-    tag: { en: "Trending", bn: "ট্রেন্ডিং" }
-  },
+  // {
+  //   id: "skin-caree",
+  //   category: "Cosmetics",
+  //   price: "৳PRICE",
+  //   emoji: "⌚",
+  //   coverImage: "thumb image",
+  //   galleryImages: [
+  //     "img-1",
+  //     "img-2",
+  //     "img-3",
+  //     "img-4"
+  //   ],
+  //   title: { en: "eng-title", bn: "bangle-title" },
+  //   description: {
+  //     en: "eng-desc",
+  //     bn: "bangla-des"
+  //   },
+  //   features: {
+  //     en: ["features in eng"],
+  //     bn: ["bangla feature"]
+  //   },
+  //   tag: { en: "Trending", bn: "ট্রেন্ডিং" }
+  // },
   // {
   //   id: "skin-caree",
   //   category: "Cosmetics",
