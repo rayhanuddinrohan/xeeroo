@@ -171,8 +171,7 @@ function getCategorySlug(category) {
 
 function getProductUrl(product) {
   const catSlug = getCategorySlug(product.category);
-  const prodSlug = getProductSlug(product);
-  return `/${catSlug}/${prodSlug}`;
+  return `/${catSlug}/${product.id}`;
 }
 
 function getLocalized(product, field) {
@@ -322,28 +321,21 @@ function parseUrl() {
     return { page: "products", category: "All" };
   }
 
-  // /category-slug/product-slug — product detail page
+  // /category-slug/product-id — product detail page
   if (parts.length >= 2) {
     const catSlug = parts[0];
-    const prodSlug = parts[1];
+    const prodId = parts[1];
 
-    // Find product by matching slugs
-    for (const product of products) {
-      if (getCategorySlug(product.category) === catSlug && getProductSlug(product) === prodSlug) {
-        return { page: "product-detail", productId: product.id };
-      }
+    // Find product by matching category slug and product id
+    const productById = getProductById(prodId);
+    if (productById && getCategorySlug(productById.category) === catSlug) {
+      return { page: "product-detail", productId: productById.id };
     }
 
     // If we found a category but no product, show products page filtered by category
     const matchingCat = products.find(p => getCategorySlug(p.category) === catSlug);
     if (matchingCat) {
       return { page: "products", category: matchingCat.category };
-    }
-
-    // Fallback - try direct product lookup by id
-    const productById = getProductById(parts[1]);
-    if (productById) {
-      return { page: "product-detail", productId: productById.id };
     }
   }
 
@@ -374,10 +366,10 @@ function handleRoute() {
     el.style.display = "none";
   });
 
-  // Show contact section only on home page
+  // Show contact section on all pages
   const contactSection = document.getElementById("contact");
   if (contactSection) {
-    contactSection.style.display = page === "home" ? "" : "none";
+    contactSection.style.display = "";
   }
 
   if (page === "home") {
@@ -496,7 +488,7 @@ function renderProducts(activeCategory = "All") {
 
   container.innerHTML = filteredProducts
     .map((product) => `
-      <article class="card" onclick="navigateTo('${getProductUrl(product)}')">
+      <article class="card home-card" onclick="navigateTo('${getProductUrl(product)}')">
         <div class="card-media">
           ${getProductImage(product)
             ? `<img class="product-image" src="${getProductImage(product)}" alt="${getLocalized(product, "title")}" />`
@@ -504,7 +496,6 @@ function renderProducts(activeCategory = "All") {
         </div>
         <p class="eyebrow">${getLocalized(product, "tag")}</p>
         <h3>${getLocalized(product, "title")}</h3>
-        <p>${getLocalized(product, "description")}</p>
         <p class="price">${product.price}</p>
         <div class="card-actions">
           <a class="button button-secondary" href="${getProductUrl(product)}" onclick="event.stopPropagation(); navigateTo('${getProductUrl(product)}'); return false;">${translations[currentLanguage].cta.viewDetails}</a>
@@ -585,7 +576,6 @@ function renderProductDetails(productId) {
         <p class="eyebrow">${getLocalized(product, "tag")}</p>
         <h2>${getLocalized(product, "title")}</h2>
       </div>
-      <div class="price">${product.price}</div>
     </div>
     <div class="detail-grid">
       <div class="card detail-media-card">
@@ -593,6 +583,7 @@ function renderProductDetails(productId) {
           <img id="main-product-image" class="detail-main-image" src="${mainImage}" alt="${getLocalized(product, "title")}" style="cursor:pointer" />
           ${galleryImages.length ? `<div class="gallery-thumbs">${galleryImages.map((image, index) => `<button class="thumb-btn ${index === 0 ? "active" : ""}" data-image="${image}" data-index="${index}" type="button"><img src="${image}" alt="${getLocalized(product, "title")} ${index + 1}" /></button>`).join("")}</div>` : ""}
         </div>
+        <p class="price detail-price">${product.price}</p>
       </div>
       <div class="card">
         <h3>${translations[currentLanguage].product.why}</h3>
