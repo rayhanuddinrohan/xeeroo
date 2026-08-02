@@ -46,7 +46,7 @@ const products = [
   },
   {
     id: "fluffy-powder",
-    category: "Cosmetics",
+    category: "Men's Fashion",
     price: "৳350",
     emoji: "⌚",
     coverImage: "https://img.drz.lazcdn.com/static/bd/p/d6219f5e6a31824c4149c290de60c6d4.jpg_2200x2200q80.jpg_.webp",
