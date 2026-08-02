@@ -68,29 +68,29 @@ const products = [
     },
     tag: { en: "Trending", bn: "ট্রেন্ডিং" }
   },
-  // {
-  //   id: "skin-caree",
-  //   category: "Cosmetics",
-  //   price: "৳PRICE",
-  //   emoji: "⌚",
-  //   coverImage: "thumb image",
-  //   galleryImages: [
-  //     "img-1",
-  //     "img-2",
-  //     "img-3",
-  //     "img-4"
-  //   ],
-  //   title: { en: "eng-title", bn: "bangle-title" },
-  //   description: {
-  //     en: "eng-desc",
-  //     bn: "bangla-des"
-  //   },
-  //   features: {
-  //     en: ["features in eng"],
-  //     bn: ["bangla feature"]
-  //   },
-  //   tag: { en: "Trending", bn: "ট্রেন্ডিং" }
-  // },
+  {
+    id: "Black-Sunglass-1",
+    category: "Men's Fashion",
+    price: "৳219",
+    emoji: "🕶️",
+    coverImage: "https://img.drz.lazcdn.com/g/kf/Sefe6e471ca174cc683b2dba2b50d0785N.jpg_720x720q80.jpg_.webp",
+    galleryImages: [
+      "https://img.drz.lazcdn.com/g/kf/S2b29f934fc96490db2294b65205644e4v.jpg_720x720q80.jpg_.webp",
+      "https://img.drz.lazcdn.com/g/kf/S3094d52188a94dada60f4c86b0cb4572X.jpg_720x720q80.jpg_.webp",
+      "https://img.drz.lazcdn.com/g/kf/S51ec3389971542c08d736d52abd959d1k.jpg_720x720q80.jpg_.webp",
+      "https://img.drz.lazcdn.com/g/kf/S9491e6464c1741169542007151d21e83e.jpg_720x720q80.jpg_.webp"
+    ],
+    title: { en: "Trendsetter -Upscale Living -New Trendy Look Very Stylish Black Sunglass for Men", bn: "Trendsetter -Upscale Living -New Trendy Look Very Stylish Black Sunglass for Men" },
+    description: {
+      en: "New Trendy Look Very Stylish Black Sunglass for Men 2022 polorizedBest quality polorized sunglassquality 100% Size:Standard(All face)Product Type: Very Stylish SunglassesMain Material: high quality  frameGender: MenColor: DEEP  BlacStandard size and 400 uv protectionOccasion Trendy lifestyle and regular fashionloocking like a picture",
+      bn: "নতুন ট্রেন্ডি লুক খুব স্টাইলিশ কালো সানগ্লাস পুরুষদের জন্য 2022 পোলারাইজড সেরা মানের পোলারাইজড সানগ্লাস মানের 100% আকার: স্ট্যান্ডার্ড (সব মুখ) পণ্যের ধরন: খুব স্টাইলিশ সানগ্লাস প্রধান উপাদান: উচ্চ মানের ফ্রেম লিঙ্গ: পুরুষ রঙ: ডিপ ব্ল্যাক স্ট্যান্ডার্ড আকার এবং 400 ইউভি সুরক্ষা সুযোগ ট্রেন্ডি লাইফস্টাইল এবং নিয়মিত ফ্যাশন লুকিং একটি ছবির মতো"
+    },
+    features: {
+      en: ["Best quality polorized sunglass", "Size:Standard(All face)", "Color:Black", "UV400 Protection", "Gender: Men"],
+      bn: ["সেরা মানের পোলারাইজড সানগ্লাস", "আকার: স্ট্যান্ডার্ড (সব মুখ)", "রঙ: কালো", "UV400 সুরক্ষা", "লিঙ্গ: পুরুষ"]
+    },
+    tag: { en: "Fashion", bn: "ফ্যাশন" }
+  },
   // {
   //   id: "skin-caree",
   //   category: "Cosmetics",
